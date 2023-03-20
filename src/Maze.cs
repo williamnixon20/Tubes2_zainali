@@ -1,0 +1,233 @@
+﻿using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Collections.Generic;
+using System;
+using System.IO;
+namespace Tubes2_zainali
+{
+    public class Maze
+    {
+        private List<List<char>> _mapMatrix;
+        private int _nRows;
+        private int _nCols;
+        private Point _mazeStart;
+        private HashSet<Point> _treasureSet;
+
+        /* CTOR */
+        public Maze(string mapConfig)
+        {
+            mapConfig = mapConfig.TrimEnd('\r', '\n', ' ');      // remove trailing newline from config text
+            this._mapMatrix = new List<List<char>>();
+            this._mazeStart = new Point(-1, -1);
+            this._treasureSet = new HashSet<Point>();
+            
+            // Check syntax of file
+            string mapConfigSyntax = @"^([KTRX][\s\n])+$";
+            if (!Regex.IsMatch(mapConfig, mapConfigSyntax, RegexOptions.Multiline))
+            {
+                throw new MapFileException("Map Configuration File Has Illegal Characters.");
+            } 
+
+            // Process map matrix
+            string[] mapRows = mapConfig.Split("\n");
+            int colCount = -1;
+            for (int i = 0; i < mapRows.Length; i++)
+            {
+                string row = mapRows[i];
+                string[] mapColumns = row.Trim().Split(" ");
+
+                if (colCount == -1)     // undeclared column length
+                {
+                    colCount = mapColumns.Length;
+                }
+                else if (row == "")
+                {
+                    if (i != mapRows.Length - 1)
+                    {
+                        throw new MapFileException("Map Configuration File Must Have Rows Split by Only a Newline.");
+                    }
+                    break;
+                }
+                else if (mapColumns.Length != colCount)     // a column is not equal in length to previous columns
+                {
+                    throw new MapFileException("Map Configuration File Must Have Equal Number of Tiles Separated by a Whitespace in Each Row.");
+                }
+
+                // process row, add to mapMatrix
+                List<char> currentRow = new List<char>();
+                for (int j = 0; j < mapColumns.Length; j++)
+                {
+                    string tile = mapColumns[j];
+                    currentRow.Add(tile[0]);
+
+                    if (tile == "K")    // check start tile "K"
+                    {
+                        if (this._mazeStart.X == -1 && this._mazeStart.Y == -1)   // uninitialized start
+                        {
+                            this._mazeStart = new Point(i, j);
+                        } 
+                        else
+                        {
+                            throw new MapFileException("Map Configuration has multiple start points.");
+                        }
+                    }
+
+                    if (tile == "T")    // list treasures
+                    {
+                        this._treasureSet.Add(new Point(i, j));
+                    }
+                }
+
+                this._mapMatrix.Add(currentRow);
+            }
+
+            this._nRows = this._mapMatrix.Count;
+            this._nCols = colCount;
+        }
+
+        public Maze(string directory, string fileName) : this(File.ReadAllText(Path.Combine(directory, fileName))) 
+        {
+        }
+
+        /* MAP INFO */
+        public int GetRowCount()
+        {
+            return this._nRows;
+        }
+
+        public int GetColCount()
+        {
+            return this._nCols;
+        }
+
+        public char GetMazeTile(int i, int j)
+        {
+            if (i < 0 || i >= this._nRows || j < 0 || j >= this._nCols)       // Point ot of bounds
+            {
+                return 'X';
+            } else
+            {
+                return this._mapMatrix[i][j];
+            }
+        }
+        public Point GetStartPoint()
+        {
+            return this._mazeStart;
+        }
+
+        public int GetTreasureCount()
+        {
+            return this._treasureSet.Count;
+        }
+        
+        public void PrintMazeInfo()
+        {
+            foreach (List<char> row in this._mapMatrix)
+            {
+                for (int i = 0; i < row.Count; i++)
+                {
+                    Console.Write(row[i]);
+
+                    if (i < row.Count - 1)
+                    {
+                        Console.Write(' ');
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
+                }
+            }
+            Console.Write("Rows : ");
+            Console.WriteLine(this.GetRowCount());
+
+            Console.Write("Columns : ");
+            Console.WriteLine(this.GetColCount());
+            
+            Console.Write("Start Point : ");
+            Console.WriteLine(this._mazeStart.ToString());
+
+            Console.Write("Treasure Count : ");
+            Console.WriteLine(this._treasureSet.Count);
+            foreach (Point treasure in _treasureSet)
+            {
+                Console.Write("  ");
+                Console.WriteLine(treasure.ToString());
+            }
+        }
+
+        /* MAZE TILE INFO */
+        public char GetMazeTile(Point tileCoordinate)
+        {
+            return this.GetMazeTile(tileCoordinate.X, tileCoordinate.Y);
+        }
+
+        public List<Point> GetNeighbors(int i, int j)
+        {
+            List<Point> neighbors = new List<Point>();
+
+            // NEIGHBOR PRIORITY: L R U D
+            Point left = new Point(i, j - 1);
+            Point right = new Point(i, j + 1);
+            Point up = new Point(i - 1, j);
+            Point down = new Point(i + 1, j);
+
+            neighbors.Add(left);
+            neighbors.Add(right);
+            neighbors.Add(up);
+            neighbors.Add(down);
+
+            return neighbors;
+        }
+
+        public List<Point> GetNeighbors(Point tile)
+        {
+            return this.GetNeighbors(tile.X, tile.Y);
+        }
+
+        public bool IsWalkable(Point currentPoint)
+        {
+            return this.GetMazeTile(currentPoint) != 'X';
+        }
+
+        
+        /* GET NEXT-POINT FROM DIRECTION */
+        static public Point GetNextPoint(Point currentPoint, char direction)
+        {
+            // assumes the next direction is valid
+
+            /*
+                (X,Y)
+                X are rows, Y are columns
+                                (X0, Y1)
+                                    ^  
+                                    |
+                                    U
+                (X1, Y0)    <-L (X1, Y1) R->    (X1, Y2)
+                                    D
+                                    |
+                                    v  
+                                (X2, Y1)
+            
+            */
+            Point nextPoint;
+            switch (direction)
+            {
+                case 'L':
+                    nextPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+                    return nextPoint;
+                case 'R':
+                    nextPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                    return nextPoint;
+                case 'U':
+                    nextPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                    return nextPoint;
+                case 'D':
+                    nextPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+                    return nextPoint;
+                default:
+                    return currentPoint;
+            }
+        }
+    }
+}

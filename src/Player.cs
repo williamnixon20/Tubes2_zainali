@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Drawing;
 using System.Text;
-
-namespace MazeGame
+using System.Collections.Generic;
+using System;
+namespace Tubes2_zainali
 {   
     public class Player
     {

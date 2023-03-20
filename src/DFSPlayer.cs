@@ -1,6 +1,8 @@
 using System.Drawing;
+using System.Collections.Generic;
+using System;
 
-namespace MazeGame
+namespace Tubes2_zainali
 {
     public class DFSPlayer : Player
     {

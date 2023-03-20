@@ -10,26 +10,26 @@ namespace MazeGame
 
         public void StartDFS()
         {
-            RecurseDFS(this.mazeMap.GetStartPoint(), 0, "", "");
+            RecurseDFS(this._mazeMap.GetStartPoint(), 0, "", "");
         }
 
         public void RecurseDFS(Point currentNode, int treasureCount, string routeTaken, string backtrackRoute)
         {
-            if (!this.isGoalFinished)
+            if (!this._isGoalFinished)
             {
                 this.BackupDirectionState(routeTaken);
-                if (treasureCount == this.mazeMap.GetTreasureCount() - 1 && this.mazeMap.GetMazeTile(currentNode) == 'T')
+                if (treasureCount == this._mazeMap.GetTreasureCount() - 1 && this._mazeMap.GetMazeTile(currentNode) == 'T')
                 {
-                    this.isGoalFinished = true;
+                    this._isGoalFinished = true;
                     return;
                 }
                 else
                 {
                     this.AddExploredNode(currentNode);
 
-                    List<Point> neighbors = this.mazeMap.GetNeighbors(currentNode);
+                    List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode);
 
-                    if (this.mazeMap.GetMazeTile(currentNode) == 'T')   // found new treasure
+                    if (this._mazeMap.GetMazeTile(currentNode) == 'T')   // found new treasure
                     {
                         treasureCount++;
                     }
@@ -55,7 +55,7 @@ namespace MazeGame
                                 break;
                         }
 
-                        if (!this.IsNodeExplored(neighbors[i]) && this.mazeMap.IsWalkable(neighbors[i]))
+                        if (!this.IsNodeExplored(neighbors[i]) && this._mazeMap.IsWalkable(neighbors[i]))
                         {
                             validNeighbors++;
                             string nextRoute = routeTaken + nextDirection;
@@ -63,20 +63,29 @@ namespace MazeGame
                         }
                     }
 
-                    // if (validNeighbors == 0)  // mentok, do backtrack
-                    // {
-                    //     string rRoute = Player.GenerateBacktrackRoute(routeTaken);
-                    //     // Console.WriteLine(rRoute);
-                    //     Point nextPoint = Maze.GetNextPoint(currentNode, rRoute[0]);
-                    //     if (rRoute.Length > 1)
-                    //     {
-                    //         RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], rRoute.Substring(1));
-                    //     }
-                    //     else
-                    //     {
-                    //         RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], "");
-                    //     }
-                    // }
+                    if (validNeighbors == 0)  // mentok, do backtrack
+                    {
+                        string rRoute;
+                        if (backtrackRoute != "")   // is already in backtrack mode
+                        {
+                            rRoute = backtrackRoute;
+                        }
+                        else
+                        {
+                            rRoute = Player.GenerateBacktrackRoute(routeTaken);
+                        }
+
+                        Point nextPoint = Maze.GetNextPoint(currentNode, rRoute[0]);
+
+                        if (rRoute.Length > 1)
+                        {
+                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], rRoute.Substring(1));
+                        }
+                        else
+                        {
+                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], "");
+                        }
+                    }
 
                 }
             }

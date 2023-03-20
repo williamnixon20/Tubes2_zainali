@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Drawing;
 using System.Text;
-
-namespace MazeGame
+using System.Collections.Generic;
+using System;
+namespace Tubes2_zainali
 {   
     public class Player
     {
@@ -15,7 +16,7 @@ namespace MazeGame
         {
             this.exploredNodes = new List<Point>();
             this.mazeMap = loadedMaze;
-            this.playerDirectionState = new List<String>();
+            this.playerDirectionState = new List<string>();
         }
 
         public void AddExploredNode(Point node)

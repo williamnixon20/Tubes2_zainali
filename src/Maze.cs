@@ -1,7 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using System.Drawing;
-
-namespace MazeGame
+using System.Collections.Generic;
+using System;
+using System.IO;
+namespace Tubes2_zainali
 {
     public class Maze
     {

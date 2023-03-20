@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MazeGame
+namespace Tubes2_zainali
 {
     public class MapFileException : Exception
     {

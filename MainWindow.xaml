@@ -3,11 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Tubes2_zainali"
+        xmlns:local="clr-namespace:Tubes2_zainali" xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Zai Na Li" Height="450" Width="800">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="250,178,0,0" VerticalAlignment="Top" Width="121" Height="27"/>
+        <ItemsControl Name="Board" Height="450" Width="450" Margin="340,0,10,-16">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate >
+                    <UniformGrid Rows="{Binding Rows}" Columns="{Binding Cols}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{Binding Path=Color}" 
+                                BorderBrush="Black"
+                                BorderThickness="1" 
+                                MouseDown="CellClick"
+                                Margin="2"
+                                Tag="{Binding}">
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

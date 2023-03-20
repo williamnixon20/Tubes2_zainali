@@ -6,48 +6,54 @@ namespace MazeGame
 {   
     public class Player
     {
-        protected List<Point> exploredNodes;
-        protected Maze mazeMap;
-        protected List<string> playerDirectionState;
-        protected bool isGoalFinished;
+        protected List<Point> _exploredNodes;
+        protected HashSet<Point> _collectedTreasure;
+        protected Maze _mazeMap;
+        protected List<string> _playerDirectionState;
+        protected bool _isGoalFinished;
 
+        /* CTOR */
         public Player(Maze loadedMaze)
         {
-            this.exploredNodes = new List<Point>();
-            this.mazeMap = loadedMaze;
-            this.playerDirectionState = new List<String>();
+            this._exploredNodes = new List<Point>();
+            this._collectedTreasure = new HashSet<Point>();
+            this._mazeMap = loadedMaze;
+            this._playerDirectionState = new List<String>();
         }
 
+        /* EXPLORED-NODES METHODS */
         public void AddExploredNode(Point node)
         {
-            this.exploredNodes.Add(node);
+            this._exploredNodes.Add(node);
         }
 
         public int GetNodeExploredCount()
         {
-            return this.exploredNodes.Count;
+            return this._exploredNodes.Count;
         }
 
         public bool IsNodeExplored(Point node)
         {
-            return this.exploredNodes.Contains(node);
+            return this._exploredNodes.Contains(node);
         }
 
+        /* STATE-BACKUPS METHODS */
         public void BackupDirectionState(string directions)
         {
-            this.playerDirectionState.Add(directions);
+            this._playerDirectionState.Add(directions);
         }
 
         public string GetStateBackup(int i)
         {
-            return this.playerDirectionState[i];
+            return this._playerDirectionState[i];
         }
 
         public int GetBackupCount()
         {
-            return this.playerDirectionState.Count;
+            return this._playerDirectionState.Count;
         }
 
+        /* BACKTRACK ROUTING */
         static public string GenerateBacktrackRoute(string route)
         {
             char[] reversedRoute = route.ToCharArray();

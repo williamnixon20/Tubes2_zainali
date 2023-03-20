@@ -184,21 +184,36 @@ namespace MazeGame
 
         static public Point GetNextPoint(Point currentPoint, char direction)
         {
-            // assume next direction is valid
+            // assumes the next direction is valid
+
+            /*
+                (X,Y)
+                X are rows, Y are columns
+                                (X0, Y1)
+                                    ^  
+                                    |
+                                    U
+                (X1, Y0)    <-L (X1, Y1) R->    (X1, Y2)
+                                    D
+                                    |
+                                    v  
+                                (X2, Y1)
+            
+            */
             Point nextPoint;
             switch (direction)
             {
                 case 'L':
-                    nextPoint = new Point(currentPoint.X - 1, currentPoint.Y);
-                    return nextPoint;
-                case 'R':
-                    nextPoint = new Point(currentPoint.X + 1, currentPoint.Y);
-                    return nextPoint;
-                case 'U':
                     nextPoint = new Point(currentPoint.X, currentPoint.Y - 1);
                     return nextPoint;
-                case 'D':
+                case 'R':
                     nextPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                    return nextPoint;
+                case 'U':
+                    nextPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                    return nextPoint;
+                case 'D':
+                    nextPoint = new Point(currentPoint.X + 1, currentPoint.Y);
                     return nextPoint;
                 default:
                     return currentPoint;

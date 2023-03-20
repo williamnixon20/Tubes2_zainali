@@ -9,14 +9,15 @@ namespace MazeGame
         private int nRows;
         private int nCols;
         private Point mazeStart;
-        private List<Point> treasureList;
+        private HashSet<Point> treasureSet;
+
 
         public Maze(string mapConfig)
         {
-            mapConfig = mapConfig.TrimEnd('\r', '\n');      // remove trailing newline from config text
+            mapConfig = mapConfig.TrimEnd('\r', '\n', ' ');      // remove trailing newline from config text
             this.mapMatrix = new List<List<char>>();
             this.mazeStart = new Point(-1, -1);
-            this.treasureList = new List<Point>();
+            this.treasureSet = new HashSet<Point>();
             
             // Check syntax of file
             string mapConfigSyntax = @"^([KTRX][\s\n])+$";
@@ -71,7 +72,7 @@ namespace MazeGame
 
                     if (tile == "T")    // list treasures
                     {
-                        this.treasureList.Add(new Point(i, j));
+                        this.treasureSet.Add(new Point(i, j));
                     }
                 }
 
@@ -86,32 +87,66 @@ namespace MazeGame
         {
         }
 
-        public int getRowCount()
+        public int GetRowCount()
         {
             return this.nRows;
         }
 
-        public int getColCount()
+        public int GetColCount()
         {
             return this.nCols;
         }
 
-        public char getMazeTile(int i, int j)
+        public char GetMazeTile(int i, int j)
         {
-            return this.mapMatrix[i][j];
+            if (i < 0 || i >= this.nRows || j < 0 || j >= this.nCols)       // Point ot of bounds
+            {
+                return 'X';
+            } else
+            {
+                return this.mapMatrix[i][j];
+            }
         }
 
-        public Point getStartPoint()
+        public char GetMazeTile(Point tileCoordinate)
+        {
+            return this.GetMazeTile(tileCoordinate.X, tileCoordinate.Y);
+        }
+
+        public List<Point> GetNeighbors(int i, int j)
+        {
+            List<Point> neighbors = new List<Point>();
+
+            // NEIGHBOR PRIORITY: L R U D
+            Point left = new Point(i, j - 1);
+            Point right = new Point(i, j + 1);
+            Point up = new Point(i - 1, j);
+            Point down = new Point(i + 1, j);
+
+            neighbors.Add(left);
+            neighbors.Add(right);
+            neighbors.Add(up);
+            neighbors.Add(down);
+
+            return neighbors;
+        }
+
+        public List<Point> GetNeighbors(Point tile)
+        {
+            return this.GetNeighbors(tile.X, tile.Y);
+        }
+
+        public Point GetStartPoint()
         {
             return this.mazeStart;
         }
 
-        public int getTreasureCount()
+        public int GetTreasureCount()
         {
-            return this.treasureList.Count;
+            return this.treasureSet.Count;
         }
         
-        public void printMazeInfo()
+        public void PrintMazeInfo()
         {
             foreach (List<char> row in this.mapMatrix)
             {
@@ -130,21 +165,49 @@ namespace MazeGame
                 }
             }
             Console.Write("Rows : ");
-            Console.WriteLine(this.getRowCount());
+            Console.WriteLine(this.GetRowCount());
 
             Console.Write("Columns : ");
-            Console.WriteLine(this.getColCount());
+            Console.WriteLine(this.GetColCount());
             
             Console.Write("Start Point : ");
             Console.WriteLine(this.mazeStart.ToString());
 
             Console.Write("Treasure Count : ");
-            Console.WriteLine(this.treasureList.Count);
-            foreach (Point treasure in treasureList)
+            Console.WriteLine(this.treasureSet.Count);
+            foreach (Point treasure in treasureSet)
             {
                 Console.Write("  ");
                 Console.WriteLine(treasure.ToString());
             }
+        }
+
+        static public Point GetNextPoint(Point currentPoint, char direction)
+        {
+            // assume next direction is valid
+            Point nextPoint;
+            switch (direction)
+            {
+                case 'L':
+                    nextPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                    return nextPoint;
+                case 'R':
+                    nextPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+                    return nextPoint;
+                case 'U':
+                    nextPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+                    return nextPoint;
+                case 'D':
+                    nextPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                    return nextPoint;
+                default:
+                    return currentPoint;
+            }
+        }
+
+        public bool IsWalkable(Point currentPoint)
+        {
+            return this.GetMazeTile(currentPoint) != 'X';
         }
     }
 }

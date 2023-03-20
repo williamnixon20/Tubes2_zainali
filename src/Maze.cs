@@ -13,6 +13,7 @@ namespace MazeGame
 
         public Maze(string mapConfig)
         {
+            mapConfig = mapConfig.TrimEnd('\r', '\n');      // remove trailing newline from config text
             this.mapMatrix = new List<List<char>>();
             this.mazeStart = new Point(-1, -1);
             this.treasureList = new List<Point>();
@@ -38,9 +39,9 @@ namespace MazeGame
                 }
                 else if (row == "")
                 {
-                    if (i != mapRows.Length - 1)        // blank is not in end of file
+                    if (i != mapRows.Length - 1)
                     {
-                        throw new MapFileException("Map Configuration File Must Have Rows Split by a Newline.");
+                        throw new MapFileException("Map Configuration File Must Have Rows Split by Only a Newline.");
                     }
                     break;
                 }

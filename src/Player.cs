@@ -39,6 +39,11 @@ namespace Tubes2_zainali
             get { return this._exploredNodes.Count; }
         }
 
+        public List<string> PlayerLog
+        {
+            get { return this._playerDirectionState; }
+        }
+
         public bool IsNodeExplored(Point node)
         {
             return this._exploredNodes.Contains(node);

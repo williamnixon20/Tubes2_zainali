@@ -20,21 +20,23 @@ namespace Tubes2_zainali
             if (!this._isGoalFinished)
             {
                 this.BackupDirectionState(routeTaken);
-                if (treasureCount == this._mazeMap.TreasureCount - 1 && this._mazeMap.GetMazeTile(currentNode) == 'T')
+                
+                if (treasureCount == this._mazeMap.GetTreasureCount())
                 {
                     this._isGoalFinished = true;
+                    DeleteAfterLastState();
                     return;
                 }
                 else
                 {
+                    if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
+                    {
+
+                        treasureCount++;
+                    }
                     this.AddExploredNode(currentNode);
 
                     List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode);
-
-                    if (this._mazeMap.GetMazeTile(currentNode) == 'T')   // found new treasure
-                    {
-                        treasureCount++;
-                    }
 
 
                     int validNeighbors = 0;
@@ -61,6 +63,7 @@ namespace Tubes2_zainali
                         {
                             validNeighbors++;
                             string nextRoute = routeTaken + nextDirection;
+
                             RecurseDFS(neighbors[i], treasureCount, nextRoute, "");
                         }
                     }
@@ -92,7 +95,17 @@ namespace Tubes2_zainali
                 }
             }
         }
-        
+        // TEST
+        // static void Main(string[] args)
+        // {
+        //     string directory = "../test/";
+        //     string filename = "sample-1.txt";
+        //     Maze maze = new Maze(directory, filename);
+        //     DFSPlayer d = new DFSPlayer(maze);
+        //     d.StartDFS();
+        //     d.printState();
+        // }
+
     }
-    
+
 }

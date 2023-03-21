@@ -20,21 +20,21 @@ namespace Tubes2_zainali
             this._mapMatrix = new List<List<char>>();
             this._mazeStart = new Point(-1, -1);
             this._treasureSet = new HashSet<Point>();
-            
+
             // Check syntax of file
             string mapConfigSyntax = @"^([KTRX][\s\n])+$";
             if (!Regex.IsMatch(mapConfig, mapConfigSyntax, RegexOptions.Multiline))
             {
                 throw new MapFileException("Map Configuration File Has Illegal Characters.");
-            } 
+            }
 
             // Process map matrix
-            string[] mapRows = mapConfig.Split("\n");
+            string[] mapRows = mapConfig.Split('\n');
             int colCount = -1;
             for (int i = 0; i < mapRows.Length; i++)
             {
                 string row = mapRows[i];
-                string[] mapColumns = row.Trim().Split(" ");
+                string[] mapColumns = row.Trim().Split(' ');
 
                 if (colCount == -1)     // undeclared column length
                 {
@@ -65,7 +65,7 @@ namespace Tubes2_zainali
                         if (this._mazeStart.X == -1 && this._mazeStart.Y == -1)   // uninitialized start
                         {
                             this._mazeStart = new Point(i, j);
-                        } 
+                        }
                         else
                         {
                             throw new MapFileException("Map Configuration has multiple start points.");
@@ -85,7 +85,7 @@ namespace Tubes2_zainali
             this._nCols = colCount;
         }
 
-        public Maze(string directory, string fileName) : this(File.ReadAllText(Path.Combine(directory, fileName))) 
+        public Maze(string directory, string fileName) : this(File.ReadAllText(Path.Combine(directory, fileName)))
         {
         }
 
@@ -105,7 +105,8 @@ namespace Tubes2_zainali
             if (i < 0 || i >= this._nRows || j < 0 || j >= this._nCols)       // Point ot of bounds
             {
                 return 'X';
-            } else
+            }
+            else
             {
                 return this._mapMatrix[i][j];
             }
@@ -119,7 +120,7 @@ namespace Tubes2_zainali
         {
             get { return this._treasureSet.Count; }
         }
-        
+
         public void PrintMazeInfo()
         {
             foreach (List<char> row in this._mapMatrix)
@@ -190,7 +191,7 @@ namespace Tubes2_zainali
             return this.GetMazeTile(currentPoint) != 'X';
         }
 
-        
+
         /* GET NEXT-POINT FROM DIRECTION */
         static public Point GetNextPoint(Point currentPoint, char direction)
         {

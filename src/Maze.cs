@@ -230,5 +230,14 @@ namespace Tubes2_zainali
                     return currentPoint;
             }
         }
+        static public Point GetNextPoint(Point currentPoint, string steps)
+        {
+            Point nextPoint = currentPoint;
+            foreach (char direction in steps)
+            {
+                nextPoint = Maze.GetNextPoint(nextPoint, direction);
+            }
+            return nextPoint;
+        }
     }
 }

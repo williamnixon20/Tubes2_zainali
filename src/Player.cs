@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System;
 namespace Tubes2_zainali
-{   
+{
     public class Player
     {
         protected List<Point> _exploredNodes;
@@ -43,10 +43,22 @@ namespace Tubes2_zainali
         {
             this._playerDirectionState.Add(directions);
         }
+        public void DeleteAfterLastState()
+        {
+            this._playerDirectionState.RemoveAt(GetBackupCount() - 1);
+        }
 
         public string GetStateBackup(int i)
         {
             return this._playerDirectionState[i];
+        }
+
+        public void printState()
+        {
+            for (int i = 0; i < this._playerDirectionState.Count; i++)
+            {
+                Console.WriteLine(GetStateBackup(i));
+            }
         }
 
         public int GetBackupCount()

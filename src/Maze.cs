@@ -193,7 +193,7 @@ namespace Tubes2_zainali
 
 
         /* GET NEXT-POINT FROM DIRECTION */
-        static public Point GetNextPoint(Point currentPoint, char direction)
+        public static Point GetNextPoint(Point currentPoint, char direction)
         {
             // assumes the next direction is valid
 
@@ -230,7 +230,7 @@ namespace Tubes2_zainali
                     return currentPoint;
             }
         }
-        static public Point GetNextPoint(Point currentPoint, string steps)
+        public static Point GetNextPoint(Point currentPoint, string steps)
         {
             Point nextPoint = currentPoint;
             foreach (char direction in steps)

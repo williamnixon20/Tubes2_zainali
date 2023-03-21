@@ -6,10 +6,12 @@ namespace Tubes2_zainali
 {
     public class DFSPlayer : Player
     {
+        // CTOR
         public DFSPlayer(Maze loadedMaze) : base(loadedMaze)
         {
         }
 
+        /* DFS Solution Methods */
         public void StartDFS()
         {
             RecurseDFS(this._mazeMap.StartPoint, 0, "", "");

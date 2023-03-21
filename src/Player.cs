@@ -26,9 +26,9 @@ namespace Tubes2_zainali
             this._exploredNodes.Add(node);
         }
 
-        public int GetNodeExploredCount()
+        public int ExploredNodesCount
         {
-            return this._exploredNodes.Count;
+            get { return this._exploredNodes.Count; }
         }
 
         public bool IsNodeExplored(Point node)

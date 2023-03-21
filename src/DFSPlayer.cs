@@ -6,24 +6,35 @@ namespace Tubes2_zainali
 {
     public class DFSPlayer : Player
     {
+        private bool tsp = true;
+
+        public void setTsp(bool _tsp)
+        {
+            tsp = _tsp;
+        }
         public DFSPlayer(Maze loadedMaze) : base(loadedMaze)
         {
         }
 
         public void StartDFS()
         {
-            RecurseDFS(this._mazeMap.GetStartPoint(), 0, "", "");
+            RecurseDFS(this._mazeMap.GetStartPoint(), 0, "", "", tsp);
         }
 
-        public void RecurseDFS(Point currentNode, int treasureCount, string routeTaken, string backtrackRoute)
+        public void RecurseDFS(Point currentNode, int treasureCount, string routeTaken, string backtrackRoute, bool tsp)
         {
             if (!this._isGoalFinished)
             {
                 this.BackupDirectionState(routeTaken);
-                if (treasureCount == this._mazeMap.GetTreasureCount())
+                if (tsp == false && treasureCount == this._mazeMap.GetTreasureCount())
                 {
                     this._isGoalFinished = true;
                     DeleteAfterLastState();
+                    return;
+                }
+                else if (tsp == true && treasureCount == this._mazeMap.GetTreasureCount() && this._mazeMap.GetMazeTile(currentNode) == 'K')
+                {
+                    this._isGoalFinished = true;
                     return;
                 }
                 else
@@ -63,7 +74,7 @@ namespace Tubes2_zainali
                             validNeighbors++;
                             string nextRoute = routeTaken + nextDirection;
 
-                            RecurseDFS(neighbors[i], treasureCount, nextRoute, "");
+                            RecurseDFS(neighbors[i], treasureCount, nextRoute, "", tsp);
                         }
                     }
 
@@ -83,11 +94,11 @@ namespace Tubes2_zainali
 
                         if (rRoute.Length > 1)
                         {
-                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], rRoute.Substring(1));
+                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], rRoute.Substring(1), tsp);
                         }
                         else
                         {
-                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], "");
+                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], "", tsp);
                         }
                     }
 
@@ -95,15 +106,15 @@ namespace Tubes2_zainali
             }
         }
         // TEST
-        // static void Main(string[] args)
-        // {
-        //     string directory = "../test/";
-        //     string filename = "sample-1.txt";
-        //     Maze maze = new Maze(directory, filename);
-        //     DFSPlayer d = new DFSPlayer(maze);
-        //     d.StartDFS();
-        //     d.printState();
-        // }
+        static void Main(string[] args)
+        {
+            string directory = "../test/";
+            string filename = "sample.txt";
+            Maze maze = new Maze(directory, filename);
+            DFSPlayer d = new DFSPlayer(maze);
+            d.StartDFS();
+            d.printState();
+        }
 
     }
 

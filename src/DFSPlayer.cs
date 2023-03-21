@@ -7,17 +7,17 @@ namespace Tubes2_zainali
     public class DFSPlayer : Player
     {
         // CTOR
-        public DFSPlayer(Maze loadedMaze) : base(loadedMaze)
+        public DFSPlayer(Maze loadedMaze, bool enableBranchPrune=true) : base(loadedMaze, enableBranchPrune)
         {
         }
 
         /* DFS Solution Methods */
         public void StartDFS()
         {
-            RecurseDFS(this._mazeMap.StartPoint, 0, "", "");
+            RecurseDFS(this._mazeMap.StartPoint, 0, 0, "", "");
         }
 
-        public void RecurseDFS(Point currentNode, int treasureCount, string routeTaken, string backtrackRoute)
+        public void RecurseDFS(Point currentNode, int treasureCount, int treasureGain, string routeTaken, string backtrackRoute)
         {
             if (!this._isGoalFinished)
             {
@@ -34,42 +34,42 @@ namespace Tubes2_zainali
                     if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
                     {
                         treasureCount++;
+                        treasureGain++;
                     }
                     this.AddExploredNode(currentNode);
 
                     List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode);
-
-
-                    int validNeighbors = 0;
+                    List<Point> validNeighbors = new List<Point>();
                     for (int i = 0; i < neighbors.Count; i++)
                     {
-                        char nextDirection = 'X';
-                        switch (i)
-                        {
-                            case 0:     // L
-                                nextDirection = 'L';
-                                break;
-                            case 1:     // R
-                                nextDirection = 'R';
-                                break;
-                            case 2:     // U
-                                nextDirection = 'U';
-                                break;
-                            case 3:     // D
-                                nextDirection = 'D';
-                                break;
-                        }
-
                         if (!this.IsNodeExplored(neighbors[i]) && this._mazeMap.IsWalkable(neighbors[i]))
                         {
-                            validNeighbors++;
-                            string nextRoute = routeTaken + nextDirection;
-
-                            RecurseDFS(neighbors[i], treasureCount, nextRoute, "");
+                            validNeighbors.Add(neighbors[i]);
                         }
                     }
 
-                    if (validNeighbors == 0)  // mentok, do backtrack
+
+                    for (int i = 0; i < validNeighbors.Count; i++)
+                    {
+                        char nextDirection = Maze.GetDirectionBetween(currentNode, validNeighbors[i]);
+
+                        string nextRoute = routeTaken + nextDirection;
+                        int branchGain;
+                        if (validNeighbors.Count > 1)
+                        {
+                            branchGain = 0;
+                        }
+                        else
+                        {
+                            branchGain = treasureGain;
+                        }
+
+                        // Console.WriteLine(validNeighbors[i].ToString());
+                        // Console.WriteLine(currentNode.ToString() + "\n");
+                        RecurseDFS(validNeighbors[i], treasureCount, branchGain, nextRoute, "");
+                    }
+
+                    if (validNeighbors.Count == 0 && (!this.IsBranchPruningEnabled || treasureGain != 0))  // do backtrack when current route has collected treasure; pruningEnabled => check treasure gain
                     {
                         string rRoute;
                         if (backtrackRoute != "")   // is already in backtrack mode
@@ -85,11 +85,11 @@ namespace Tubes2_zainali
 
                         if (rRoute.Length > 1)
                         {
-                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], rRoute.Substring(1));
+                            RecurseDFS(nextPoint, treasureCount, treasureGain, routeTaken + rRoute[0], rRoute.Substring(1));
                         }
                         else
                         {
-                            RecurseDFS(nextPoint, treasureCount, routeTaken + rRoute[0], "");
+                            RecurseDFS(nextPoint, treasureCount, treasureGain, routeTaken + rRoute[0], "");
                         }
                     }
 

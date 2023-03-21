@@ -11,13 +11,21 @@ namespace Tubes2_zainali
         protected Maze _mazeMap;
         protected List<string> _playerDirectionState;
         protected bool _isGoalFinished;
+        protected bool _branchPruningEnabled;
 
         /* CTOR */
-        public Player(Maze loadedMaze)
+        public Player(Maze loadedMaze, bool enableBranchPrune = true)
         {
             this._exploredNodes = new List<Point>();
             this._mazeMap = loadedMaze;
             this._playerDirectionState = new List<String>();
+            this._branchPruningEnabled = enableBranchPrune;
+        }
+
+        /* GET PLAYER CONFIG: branch-pruning, tsp */
+        public bool IsBranchPruningEnabled
+        {
+            get { return this._branchPruningEnabled; }
         }
 
         /* EXPLORED-NODES METHODS */

@@ -239,5 +239,33 @@ namespace Tubes2_zainali
             }
             return nextPoint;
         }
+
+        public static char GetDirectionBetween(Point start, Point finish)
+        {
+            if (start.X == finish.X)
+            {
+                if (finish.Y < start.Y)
+                {
+                    return 'L';
+                }
+                if (start.Y < finish.Y)
+                {
+                    return 'R';
+                }
+
+            }
+            if (start.Y == finish.Y)
+            {
+                if (finish.X < start.X)
+                {
+                    return 'U';
+                }
+                if (start.X < finish.X)
+                {
+                    return 'D';
+                }
+            }
+            return 'X';
+        }
     }
 }

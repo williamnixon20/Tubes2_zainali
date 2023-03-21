@@ -97,8 +97,8 @@ namespace Tubes2_zainali
         // TEST
         // static void Main(string[] args)
         // {
-        //     string directory = "";
-        //     string filename = "peta.txt";
+        //     string directory = "../test/";
+        //     string filename = "sample-1.txt";
         //     Maze maze = new Maze(directory, filename);
         //     DFSPlayer d = new DFSPlayer(maze);
         //     d.StartDFS();

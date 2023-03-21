@@ -21,7 +21,7 @@ namespace Tubes2_zainali
             {
                 this.BackupDirectionState(routeTaken);
                 
-                if (treasureCount == this._mazeMap.GetTreasureCount())
+                if (treasureCount == this._mazeMap.TreasureCount)
                 {
                     this._isGoalFinished = true;
                     DeleteAfterLastState();
@@ -31,7 +31,6 @@ namespace Tubes2_zainali
                 {
                     if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
                     {
-
                         treasureCount++;
                     }
                     this.AddExploredNode(currentNode);

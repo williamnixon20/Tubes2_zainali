@@ -8,7 +8,6 @@ namespace Tubes2_zainali
     public class Player
     {
         protected List<Point> _exploredNodes;
-        protected HashSet<Point> _collectedTreasure;
         protected Maze _mazeMap;
         protected List<string> _playerDirectionState;
         protected bool _isGoalFinished;
@@ -17,7 +16,6 @@ namespace Tubes2_zainali
         public Player(Maze loadedMaze)
         {
             this._exploredNodes = new List<Point>();
-            this._collectedTreasure = new HashSet<Point>();
             this._mazeMap = loadedMaze;
             this._playerDirectionState = new List<String>();
         }
@@ -45,7 +43,7 @@ namespace Tubes2_zainali
         }
         public void DeleteAfterLastState()
         {
-            this._playerDirectionState.RemoveAt(GetBackupCount() - 1);
+            this._playerDirectionState.RemoveAt(this.BackupCount - 1);
         }
 
         public string GetStateBackup(int i)
@@ -53,7 +51,7 @@ namespace Tubes2_zainali
             return this._playerDirectionState[i];
         }
 
-        public void printState()
+        public void PrintState()
         {
             for (int i = 0; i < this._playerDirectionState.Count; i++)
             {
@@ -61,9 +59,9 @@ namespace Tubes2_zainali
             }
         }
 
-        public int GetBackupCount()
+        public int BackupCount
         {
-            return this._playerDirectionState.Count;
+            get { return this._playerDirectionState.Count; }
         }
 
         /* BACKTRACK ROUTING */

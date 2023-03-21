@@ -16,17 +16,21 @@ namespace Tubes2_zainali
             private Point _currentPosition;
             private string _movementSteps;
             private int _treasureCount;
+            private int _branchTreasureGain;
+            private int _backtrackFlag;
             private List<Point> _pointSteps;
 
-            public BFSPoint(Point node, string movementHistory, int treasure)
+            public BFSPoint(Point node, string movementHistory, int treasure, int branchGain, int backtrackFlag)
             {
                 this._currentPosition = new Point(node.X, node.Y);
                 this._movementSteps = movementHistory;
                 this._treasureCount = treasure;
+                this._branchTreasureGain = branchGain;
+                this._backtrackFlag = backtrackFlag;
                 this._pointSteps = new List<Point>();
             }
 
-            public BFSPoint(Point node, string movementHistory, int treasure, List<Point> pointsteps) : this(node, movementHistory, treasure)
+            public BFSPoint(Point node, string movementHistory, int treasure, List<Point> pointsteps, int branchGain, int backtrackFlag) : this(node, movementHistory, treasure, branchGain, backtrackFlag)
             {
                 foreach (Point step in pointsteps)
                 {
@@ -50,6 +54,12 @@ namespace Tubes2_zainali
                 set { this._treasureCount = value; }
             }
 
+            public int BranchGain
+            {
+                get { return this._branchTreasureGain; }
+                set { this._branchTreasureGain = value; }
+            }
+
             public List<Point> PointSteps
             {
                 get { return this._pointSteps; }
@@ -64,6 +74,29 @@ namespace Tubes2_zainali
             {
                 return this._pointSteps.Contains(step);
             }
+
+            public bool IsFlagInactive
+            {
+                get { return this._backtrackFlag == 0; }
+            }
+
+            public int BacktrackFlag
+            {
+                get { return this._backtrackFlag; }
+            }
+
+            public void IncrementBacktrackFlag()
+            {
+                this._backtrackFlag += 2;
+            }
+
+            public char NextBackStep
+            {
+                get
+                {
+                    return Player.GenerateBacktrackRoute(this.Steps.Substring(0, this.Steps.Length - this._backtrackFlag))[0]; 
+                }
+            }
         }
         
         /* BFS Solution Methods */
@@ -74,7 +107,7 @@ namespace Tubes2_zainali
 
         public void IterateBFS(Point startNode)
         {
-            BFSPoint mazeStart = new BFSPoint(this._mazeMap.StartPoint, "", 0);
+            BFSPoint mazeStart = new BFSPoint(this._mazeMap.StartPoint, "", 0, 0, 0);
             mazeStart.AddSelfAsStep();
             Queue<BFSPoint> searchQueue = new Queue<BFSPoint>();
 
@@ -90,6 +123,7 @@ namespace Tubes2_zainali
                 if (this._mazeMap.GetMazeTile(currentNode.Point) == 'T' && !currentNode.IsAnExploredStep(currentNode.Point))
                 {
                     currentNode.TreasureCount++;
+                    currentNode.BranchGain++;
                 }
 
                 // goal check
@@ -99,43 +133,80 @@ namespace Tubes2_zainali
                     break;
                 }
 
-
+                // get valid neighbors
                 List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode.Point);
-                int validNeighbors = 0;
+                List<Point> validNeighbors = new List<Point>();
                 for (int i = 0; i < neighbors.Count; i++)
                 {
-                    char nextDirection = 'X';
-                    switch (i)
+                    if (!currentNode.IsAnExploredStep(neighbors[i]) && this._mazeMap.IsWalkable(neighbors[i]))
                     {
-                        case 0:     // L
-                            nextDirection = 'L';
-                            break;
-                        case 1:     // R
-                            nextDirection = 'R';
-                            break;
-                        case 2:     // U
-                            nextDirection = 'U';
-                            break;
-                        case 3:     // D
-                            nextDirection = 'D';
-                            break;
-                    }
-
-                    if (this._mazeMap.IsWalkable(neighbors[i]) && !currentNode.IsAnExploredStep(neighbors[i]))
-                    {
-                        validNeighbors++;
-                        string route = currentNode.Steps + nextDirection;
-
-                        currentNode.AddSelfAsStep();    // mark self as a visited node in Point Self history, add neighbor to queue
-                        BFSPoint n = new BFSPoint(neighbors[i], route, currentNode.TreasureCount, currentNode.PointSteps);
-                        searchQueue.Enqueue(n);                    
+                        validNeighbors.Add(neighbors[i]);
                     }
                 }
 
-                // if (validNeighbors == 0)        // todo: backtrack
-                // {
+                currentNode.AddSelfAsStep();    // mark self as a visited node in self's Point history
+                for (int i = 0; i < validNeighbors.Count; i++)
+                {
+                    char nextDirection = Maze.GetDirectionBetween(currentNode.Point, validNeighbors[i]);
 
+                    int nextBranchGain;
+                    if (validNeighbors.Count > 1)
+                    {
+                        nextBranchGain = 0;
+                    }
+                    else
+                    {
+                        nextBranchGain = currentNode.BranchGain;
+                    }
+
+                    string route = currentNode.Steps + nextDirection;
+
+                    BFSPoint n = new BFSPoint(validNeighbors[i], route, currentNode.TreasureCount, currentNode.PointSteps, nextBranchGain, 0);
+                    searchQueue.Enqueue(n);
+                }
+                
+                // // OLD BFS
+                // List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode.Point);
+                // int validNeighborsCn = 0;
+                // for (int i = 0; i < neighbors.Count; i++)
+                // {
+                //     char nextDirection = 'X';
+                //     switch (i)
+                //     {
+                //         case 0:     // L
+                //             nextDirection = 'L';
+                //             break;
+                //         case 1:     // R
+                //             nextDirection = 'R';
+                //             break;
+                //         case 2:     // U
+                //             nextDirection = 'U';
+                //             break;
+                //         case 3:     // D
+                //             nextDirection = 'D';
+                //             break;
+                //     }
+
+                //     if (this._mazeMap.IsWalkable(neighbors[i]) && !currentNode.IsAnExploredStep(neighbors[i]))
+                //     {
+                //         validNeighborsCn++;
+                //         string route = currentNode.Steps + nextDirection;
+
+                //         currentNode.AddSelfAsStep();    // mark self as a visited node in Point Self history, add neighbor to queue
+                //         BFSPoint n = new BFSPoint(neighbors[i], route, currentNode.TreasureCount, currentNode.PointSteps);
+                //         searchQueue.Enqueue(n);                    
+                //     }
                 // }
+
+                if (validNeighbors.Count == 0 && (!this.IsBranchPruningEnabled || currentNode.BranchGain != 0))        // if stuck, do backtrack until adjacent unexplored branch found
+                {
+                    char backStep = currentNode.NextBackStep;
+                    Point nextPoint = Maze.GetNextPoint(currentNode.Point, backStep);
+                    BFSPoint nextSearchPoint = new BFSPoint(nextPoint, currentNode.Steps + backStep, currentNode.TreasureCount, currentNode.PointSteps, currentNode.BranchGain, currentNode.BacktrackFlag);
+                    nextSearchPoint.IncrementBacktrackFlag();
+
+                    searchQueue.Enqueue(nextSearchPoint);
+                }
 
                 
             }

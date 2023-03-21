@@ -90,14 +90,14 @@ namespace Tubes2_zainali
         }
 
         /* MAP INFO */
-        public int GetRowCount()
+        public int RowCount
         {
-            return this._nRows;
+            get { return this._nRows; }
         }
 
-        public int GetColCount()
+        public int ColCount
         {
-            return this._nCols;
+            get { return this._nCols; }
         }
 
         public char GetMazeTile(int i, int j)
@@ -111,14 +111,14 @@ namespace Tubes2_zainali
                 return this._mapMatrix[i][j];
             }
         }
-        public Point GetStartPoint()
+        public Point StartPoint
         {
-            return this._mazeStart;
+            get { return this._mazeStart; }
         }
 
-        public int GetTreasureCount()
+        public int TreasureCount
         {
-            return this._treasureSet.Count;
+            get { return this._treasureSet.Count; }
         }
 
         public void PrintMazeInfo()
@@ -140,16 +140,16 @@ namespace Tubes2_zainali
                 }
             }
             Console.Write("Rows : ");
-            Console.WriteLine(this.GetRowCount());
+            Console.WriteLine(this.RowCount);
 
             Console.Write("Columns : ");
-            Console.WriteLine(this.GetColCount());
-
+            Console.WriteLine(this.ColCount);
+            
             Console.Write("Start Point : ");
-            Console.WriteLine(this._mazeStart.ToString());
+            Console.WriteLine(this.StartPoint.ToString());
 
             Console.Write("Treasure Count : ");
-            Console.WriteLine(this._treasureSet.Count);
+            Console.WriteLine(this.TreasureCount);
             foreach (Point treasure in _treasureSet)
             {
                 Console.Write("  ");

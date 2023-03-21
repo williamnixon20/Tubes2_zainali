@@ -12,7 +12,7 @@ namespace Tubes2_zainali
 
         public void StartDFS()
         {
-            RecurseDFS(this._mazeMap.GetStartPoint(), 0, "", "");
+            RecurseDFS(this._mazeMap.StartPoint, 0, "", "");
         }
 
         public void RecurseDFS(Point currentNode, int treasureCount, string routeTaken, string backtrackRoute)
@@ -20,6 +20,7 @@ namespace Tubes2_zainali
             if (!this._isGoalFinished)
             {
                 this.BackupDirectionState(routeTaken);
+                
                 if (treasureCount == this._mazeMap.GetTreasureCount())
                 {
                     this._isGoalFinished = true;

@@ -163,15 +163,15 @@ namespace Tubes2_zainali
             return this.GetMazeTile(tileCoordinate.X, tileCoordinate.Y);
         }
 
-        public List<Point> GetNeighbors(int i, int j)
+        public List<Point> GetNeighbors(Point tile)
         {
             List<Point> neighbors = new List<Point>();
 
             // NEIGHBOR PRIORITY: L R U D
-            Point left = new Point(i, j - 1);
-            Point right = new Point(i, j + 1);
-            Point up = new Point(i - 1, j);
-            Point down = new Point(i + 1, j);
+            Point left = GetNextPoint(tile, 'L');
+            Point right = GetNextPoint(tile, 'R');
+            Point up = GetNextPoint(tile, 'U');
+            Point down = GetNextPoint(tile, 'D');
 
             neighbors.Add(left);
             neighbors.Add(right);
@@ -179,11 +179,6 @@ namespace Tubes2_zainali
             neighbors.Add(down);
 
             return neighbors;
-        }
-
-        public List<Point> GetNeighbors(Point tile)
-        {
-            return this.GetNeighbors(tile.X, tile.Y);
         }
 
         public bool IsWalkable(Point currentPoint)

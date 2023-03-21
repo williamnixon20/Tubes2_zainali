@@ -64,8 +64,6 @@ namespace Tubes2_zainali
                             branchGain = treasureGain;
                         }
 
-                        // Console.WriteLine(validNeighbors[i].ToString());
-                        // Console.WriteLine(currentNode.ToString() + "\n");
                         RecurseDFS(validNeighbors[i], treasureCount, branchGain, nextRoute, "");
                     }
 

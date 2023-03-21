@@ -26,12 +26,8 @@ namespace Tubes2_zainali
                 this._pointSteps = new List<Point>();
             }
 
-            public BFSPoint(Point node, string movementHistory, int treasure, List<Point> pointsteps)
+            public BFSPoint(Point node, string movementHistory, int treasure, List<Point> pointsteps) : this(node, movementHistory, treasure)
             {
-                this._currentPosition = new Point(node.X, node.Y);
-                this._movementSteps = movementHistory;
-                this._treasureCount = treasure;
-                this._pointSteps = new List<Point>();
                 foreach (Point step in pointsteps)
                 {
                     this._pointSteps.Add(step);   

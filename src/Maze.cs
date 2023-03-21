@@ -90,14 +90,14 @@ namespace Tubes2_zainali
         }
 
         /* MAP INFO */
-        public int GetRowCount()
+        public int RowCount
         {
-            return this._nRows;
+            get { return this._nRows; }
         }
 
-        public int GetColCount()
+        public int ColCount
         {
-            return this._nCols;
+            get { return this._nCols; }
         }
 
         public char GetMazeTile(int i, int j)
@@ -111,14 +111,14 @@ namespace Tubes2_zainali
                 return this._mapMatrix[i][j];
             }
         }
-        public Point GetStartPoint()
+        public Point StartPoint
         {
-            return this._mazeStart;
+            get { return this._mazeStart; }
         }
 
-        public int GetTreasureCount()
+        public int TreasureCount
         {
-            return this._treasureSet.Count;
+            get { return this._treasureSet.Count; }
         }
 
         public void PrintMazeInfo()
@@ -140,16 +140,16 @@ namespace Tubes2_zainali
                 }
             }
             Console.Write("Rows : ");
-            Console.WriteLine(this.GetRowCount());
+            Console.WriteLine(this.RowCount);
 
             Console.Write("Columns : ");
-            Console.WriteLine(this.GetColCount());
-
+            Console.WriteLine(this.ColCount);
+            
             Console.Write("Start Point : ");
-            Console.WriteLine(this._mazeStart.ToString());
+            Console.WriteLine(this.StartPoint.ToString());
 
             Console.Write("Treasure Count : ");
-            Console.WriteLine(this._treasureSet.Count);
+            Console.WriteLine(this.TreasureCount);
             foreach (Point treasure in _treasureSet)
             {
                 Console.Write("  ");
@@ -193,7 +193,7 @@ namespace Tubes2_zainali
 
 
         /* GET NEXT-POINT FROM DIRECTION */
-        static public Point GetNextPoint(Point currentPoint, char direction)
+        public static Point GetNextPoint(Point currentPoint, char direction)
         {
             // assumes the next direction is valid
 
@@ -229,6 +229,43 @@ namespace Tubes2_zainali
                 default:
                     return currentPoint;
             }
+        }
+        public static Point GetNextPoint(Point currentPoint, string steps)
+        {
+            Point nextPoint = currentPoint;
+            foreach (char direction in steps)
+            {
+                nextPoint = Maze.GetNextPoint(nextPoint, direction);
+            }
+            return nextPoint;
+        }
+
+        public static char GetDirectionBetween(Point start, Point finish)
+        {
+            if (start.X == finish.X)
+            {
+                if (finish.Y < start.Y)
+                {
+                    return 'L';
+                }
+                if (start.Y < finish.Y)
+                {
+                    return 'R';
+                }
+
+            }
+            if (start.Y == finish.Y)
+            {
+                if (finish.X < start.X)
+                {
+                    return 'U';
+                }
+                if (start.X < finish.X)
+                {
+                    return 'D';
+                }
+            }
+            return 'X';
         }
     }
 }

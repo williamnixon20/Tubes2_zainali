@@ -8,18 +8,24 @@ namespace Tubes2_zainali
     public class Player
     {
         protected List<Point> _exploredNodes;
-        protected HashSet<Point> _collectedTreasure;
         protected Maze _mazeMap;
         protected List<string> _playerDirectionState;
         protected bool _isGoalFinished;
+        protected bool _branchPruningEnabled;
 
         /* CTOR */
-        public Player(Maze loadedMaze)
+        public Player(Maze loadedMaze, bool enableBranchPrune = true)
         {
             this._exploredNodes = new List<Point>();
-            this._collectedTreasure = new HashSet<Point>();
             this._mazeMap = loadedMaze;
             this._playerDirectionState = new List<String>();
+            this._branchPruningEnabled = enableBranchPrune;
+        }
+
+        /* GET PLAYER CONFIG: branch-pruning, tsp */
+        public bool IsBranchPruningEnabled
+        {
+            get { return this._branchPruningEnabled; }
         }
 
         /* EXPLORED-NODES METHODS */
@@ -28,9 +34,9 @@ namespace Tubes2_zainali
             this._exploredNodes.Add(node);
         }
 
-        public int GetNodeExploredCount()
+        public int ExploredNodesCount
         {
-            return this._exploredNodes.Count;
+            get { return this._exploredNodes.Count; }
         }
 
         public bool IsNodeExplored(Point node)
@@ -45,7 +51,7 @@ namespace Tubes2_zainali
         }
         public void DeleteAfterLastState()
         {
-            this._playerDirectionState.RemoveAt(GetBackupCount() - 1);
+            this._playerDirectionState.RemoveAt(this.BackupCount - 1);
         }
 
         public string GetStateBackup(int i)
@@ -53,7 +59,7 @@ namespace Tubes2_zainali
             return this._playerDirectionState[i];
         }
 
-        public void printState()
+        public void PrintState()
         {
             for (int i = 0; i < this._playerDirectionState.Count; i++)
             {
@@ -61,9 +67,9 @@ namespace Tubes2_zainali
             }
         }
 
-        public int GetBackupCount()
+        public int BackupCount
         {
-            return this._playerDirectionState.Count;
+            get { return this._playerDirectionState.Count; }
         }
 
         /* BACKTRACK ROUTING */

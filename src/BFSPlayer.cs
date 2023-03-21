@@ -6,7 +6,7 @@ namespace Tubes2_zainali
     public class BFSPlayer : Player
     {
         // CTOR
-        public BFSPlayer(Maze loadedMaze) : base(loadedMaze)
+        public BFSPlayer(Maze loadedMaze, bool enableBranchPrune=true) : base(loadedMaze, enableBranchPrune)
         {
         }
 
@@ -165,39 +165,6 @@ namespace Tubes2_zainali
                     searchQueue.Enqueue(n);
                 }
                 
-                // // OLD BFS
-                // List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode.Point);
-                // int validNeighborsCn = 0;
-                // for (int i = 0; i < neighbors.Count; i++)
-                // {
-                //     char nextDirection = 'X';
-                //     switch (i)
-                //     {
-                //         case 0:     // L
-                //             nextDirection = 'L';
-                //             break;
-                //         case 1:     // R
-                //             nextDirection = 'R';
-                //             break;
-                //         case 2:     // U
-                //             nextDirection = 'U';
-                //             break;
-                //         case 3:     // D
-                //             nextDirection = 'D';
-                //             break;
-                //     }
-
-                //     if (this._mazeMap.IsWalkable(neighbors[i]) && !currentNode.IsAnExploredStep(neighbors[i]))
-                //     {
-                //         validNeighborsCn++;
-                //         string route = currentNode.Steps + nextDirection;
-
-                //         currentNode.AddSelfAsStep();    // mark self as a visited node in Point Self history, add neighbor to queue
-                //         BFSPoint n = new BFSPoint(neighbors[i], route, currentNode.TreasureCount, currentNode.PointSteps);
-                //         searchQueue.Enqueue(n);                    
-                //     }
-                // }
-
                 if (validNeighbors.Count == 0 && (!this.IsBranchPruningEnabled || currentNode.BranchGain != 0))        // if stuck, do backtrack until adjacent unexplored branch found
                 {
                     char backStep = currentNode.NextBackStep;

@@ -10,6 +10,7 @@ namespace Tubes2_zainali
         private string _filename;
         private Maze _maze;
         private List<int[,]> _mazeStateLog;
+        private string _solutionRoute;
         private int[,] _mazeStateTemplate;
 
         public MazeColoring(Maze maze)
@@ -18,6 +19,7 @@ namespace Tubes2_zainali
             
             this._maze = maze;
             this._mazeStateLog = new List<int[,]>();
+            this._solutionRoute = "";
 
             this._mazeStateTemplate = new int[_maze.RowCount, _maze.ColCount];
             for (int i = 0; i < _maze.RowCount; i++)
@@ -60,14 +62,14 @@ namespace Tubes2_zainali
                 int[,] colorState = this.GenerateColoringState(route);
                 this._mazeStateLog.Add(colorState);
             }
+            this._solutionRoute = directionState.Last();
         }
 
         public string Log
         {
-            get {
+            get
+            {
                 StringBuilder log = new StringBuilder();
-                log.AppendLine(this._filename);
-                log.AppendLine();
 
                 foreach (int[,] mazeColorState in _mazeStateLog)
                 {
@@ -77,20 +79,15 @@ namespace Tubes2_zainali
                     {
                         for (int j = 0; j < _maze.ColCount; j++)
                         {
-                            if (mazeColorState[i, j] == -1)
-                            {
-                                colorState.Append('X');
-                            }
-                            else
-                            {
-                                colorState.Append(mazeColorState[i, j]);
-                            }
+                            colorState.Append(mazeColorState[i, j]);
                             colorState.Append(' ');
                         }
                         colorState.AppendLine();
                     }
                     log.AppendLine(colorState.ToString());
                 }
+                log.AppendLine("$");
+                log.AppendLine(this._solutionRoute);
                 return log.ToString();
             }
         }

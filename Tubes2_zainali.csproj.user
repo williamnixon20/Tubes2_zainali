@@ -7,15 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="MVVM\GridView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MVVM\GridView.xaml">
+    <Page Update="Theme\ButtonTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Theme\RadioTheme.xaml">

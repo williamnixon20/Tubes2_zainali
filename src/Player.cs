@@ -11,11 +11,14 @@ namespace Tubes2_zainali
     {
         /* Properties & State Fields */
         protected List<Point> _exploredNodes;
-        protected List<string> _playerDirectionState;
+        protected Maze _mazeMap;
+        public List<string> _playerDirectionState;
+        public List<string> _numSteps;
+        public List<string> _numNodes;
+        public float _time;
         protected bool _isGoalFinished;
 
         /* Config Fields */
-        protected Maze _mazeMap;
         protected bool _branchPruningEnabled;
         protected bool _tspEnabled;
 
@@ -24,7 +27,6 @@ namespace Tubes2_zainali
         private List<int[,]> _mazeStateLog;
         private string _solutionRoute;
         private int[,] _mazeStateTemplate;
-
 
         /* CTOR */
         public Player(Maze loadedMaze, bool enableBranchPrune = true)
@@ -64,13 +66,15 @@ namespace Tubes2_zainali
         {
             int[,] colorState = (int[,])this._mazeStateTemplate.Clone();
             Point playerPosition = _mazeMap.StartPoint;
-
+            Point currPoint = playerPosition;
             colorState[playerPosition.X, playerPosition.Y]++;
             foreach (char direction in directionsTaken)
             {
                 playerPosition = Maze.GetNextPoint(playerPosition, direction);
                 colorState[playerPosition.X, playerPosition.Y]++;
+                currPoint = playerPosition;
             }
+            colorState[currPoint.X, currPoint.Y] = -2;
             return colorState;
         }
         public void BackupColoringState()
@@ -117,6 +121,7 @@ namespace Tubes2_zainali
                     {
                         for (int j = 0; j < _mazeMap.ColCount; j++)
                         {
+                            colorState.Append(_mazeMap.GetMazeTile(i, j));
                             colorState.Append(mazeColorState[i, j]);
                             colorState.Append(' ');
                         }
@@ -125,29 +130,34 @@ namespace Tubes2_zainali
                     log.AppendLine(colorState.ToString());
                 }
                 log.AppendLine("$");
-                log.AppendLine(this._solutionRoute);
-                log.AppendLine("STEPS");
-                log.AppendLine("0");
+                //for (int i = 0; i < this._playerDirectionState.Count; i++)
+                //{
+                //    log.AppendLine(_playerDirectionState[i].ToString());
+                //}
+                //log.AppendLine("STEPS");
+                _numSteps = new List<string>();
                 for (int i = 0; i < this._playerDirectionState.Count; i++)
                 {
-                    log.AppendLine(NumOfSteps[i].ToString());
+                    _numSteps.Add(NumOfSteps[i].ToString());
                 }
-                log.AppendLine("NODES");
+                //log.AppendLine("NODES");
+                _numNodes = new List<string>();
                 for (int i = 0; i < this._playerDirectionState.Count; i++)
                 {
-                    log.AppendLine((i + 1).ToString());
+                    _numNodes.Add((i + 1).ToString());
                 }
 
                 return log.ToString();
             }
         }
-        public void SaveLog(string directory)
+        public string SaveLog(string directory)
         {
             string path = Path.Combine(directory, this.FileName);
             using (StreamWriter writer = new StreamWriter(path))
             {
                 writer.WriteLine(this.Log);
             }
+            return path;
         }
 
 

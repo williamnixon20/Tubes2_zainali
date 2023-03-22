@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace Tubes2_zainali
@@ -8,7 +9,7 @@ namespace Tubes2_zainali
     public class BFSPlayer : Player
     {
         // CTOR
-        public BFSPlayer(Maze loadedMaze, bool enableBranchPrune=true) : base(loadedMaze, enableBranchPrune)
+        public BFSPlayer(Maze loadedMaze, bool enableBranchPrune = true) : base(loadedMaze, enableBranchPrune)
         {
         }
 
@@ -36,7 +37,7 @@ namespace Tubes2_zainali
             {
                 foreach (Point step in pointsteps)
                 {
-                    this._pointSteps.Add(step);   
+                    this._pointSteps.Add(step);
                 }
             }
 
@@ -96,11 +97,11 @@ namespace Tubes2_zainali
             {
                 get
                 {
-                    return Player.GenerateBacktrackRoute(this.Steps.Substring(0, this.Steps.Length - this._backtrackFlag))[0]; 
+                    return Player.GenerateBacktrackRoute(this.Steps.Substring(0, this.Steps.Length - this._backtrackFlag))[0];
                 }
             }
         }
-        
+
         /* BFS Solution Methods */
         public void StartBFS()
         {
@@ -166,7 +167,7 @@ namespace Tubes2_zainali
                     BFSPoint n = new BFSPoint(validNeighbors[i], route, currentNode.TreasureCount, currentNode.PointSteps, nextBranchGain, 0);
                     searchQueue.Enqueue(n);
                 }
-                
+
                 if (validNeighbors.Count == 0 && (!this.IsBranchPruningEnabled || currentNode.BranchGain != 0))        // if stuck, do backtrack until adjacent unexplored branch found
                 {
                     char backStep = currentNode.NextBackStep;
@@ -177,8 +178,22 @@ namespace Tubes2_zainali
                     searchQueue.Enqueue(nextSearchPoint);
                 }
 
-                
+
             }
+        }
+        static void Main(string[] args)
+        {
+            // string directory = "../test/";
+            // string filename = "sample.txt";
+            // Maze maze = new Maze(directory, filename);
+            // BFSPlayer b = new BFSPlayer(maze);
+            // b.StartBFS();
+            // b.PrintState();
+            // b.BackupColoringState(b.PlayerLog);
+            // Console.Write(b.Log);
+            // b.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+
+
         }
     }
 }

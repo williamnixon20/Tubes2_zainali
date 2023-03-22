@@ -126,9 +126,9 @@ namespace Tubes2_zainali
                     log.AppendLine(NumOfSteps[i].ToString());
                 }
                 log.AppendLine("NODES");
-                for (int i = 0; i < _mazeStateLog.Count; i++)
+                for (int i = 0; i < this._playerDirectionState.Count; i++)
                 {
-                    log.AppendLine(CountingNode(_mazeStateLog[i], _mazeMap.RowCount, _mazeMap.ColCount).ToString());
+                    log.AppendLine((i + 1).ToString());
                 }
 
                 return log.ToString();

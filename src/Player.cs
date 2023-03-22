@@ -9,6 +9,7 @@ namespace Tubes2_zainali
 {
     public class Player
     {
+        /* Properties & State Fields */
         protected List<Point> _exploredNodes;
         protected Maze _mazeMap;
         public List<string> _playerDirectionState;
@@ -16,13 +17,17 @@ namespace Tubes2_zainali
         public List<string> _numNodes;
         public float _time;
         protected bool _isGoalFinished;
-        protected bool _branchPruningEnabled;
 
+        /* Config Fields */
+        protected bool _branchPruningEnabled;
+        protected bool _tspEnabled;
+
+        /* Logger-Utility Fields */
         private string _filename;
         private List<int[,]> _mazeStateLog;
         private string _solutionRoute;
         private int[,] _mazeStateTemplate;
-       
+
         /* CTOR */
         public Player(Maze loadedMaze, bool enableBranchPrune = true)
         {
@@ -51,11 +56,12 @@ namespace Tubes2_zainali
             }
         }
 
+
+        /* LOGGER METHODS */
         public string FileName
         {
             get { return this._filename; }
         }
-
         public int[,] GenerateColoringState(string directionsTaken)
         {
             int[,] colorState = (int[,])this._mazeStateTemplate.Clone();
@@ -71,17 +77,16 @@ namespace Tubes2_zainali
             colorState[currPoint.X, currPoint.Y] = -2;
             return colorState;
         }
-        public void BackupColoringState(List<string> _playerDirectionState)
+        public void BackupColoringState()
         {
             this._mazeStateLog.Add(this._mazeStateTemplate);
-            foreach (string route in _playerDirectionState)
+            foreach (string route in this._playerDirectionState)
             {
                 int[,] colorState = this.GenerateColoringState(route);
                 this._mazeStateLog.Add(colorState);
             }
-            this._solutionRoute = _playerDirectionState.Last();
+            this._solutionRoute = this._playerDirectionState.Last();
         }
-
         public int CountingNode(int[,] MazeState, int nRows, int nCols)
         {
             int count = 0;
@@ -97,6 +102,7 @@ namespace Tubes2_zainali
             }
             return count;
         }
+
         public string Log
         {
             get
@@ -154,34 +160,34 @@ namespace Tubes2_zainali
             return path;
         }
 
+
         /* GET PLAYER CONFIG: branch-pruning, tsp */
         public bool IsBranchPruningEnabled
         {
             get { return this._branchPruningEnabled; }
         }
+        public bool IsTspEnabled
+        {
+            get { return this._tspEnabled; }
+        }
+
 
         /* EXPLORED-NODES METHODS */
         public void AddExploredNode(Point node)
         {
             this._exploredNodes.Add(node);
         }
-
         public int ExploredNodesCount
         {
             get { return this._exploredNodes.Count; }
         }
-
-        public List<string> PlayerLog
-        {
-            get { return this._playerDirectionState; }
-        }
-
         public bool IsNodeExplored(Point node)
         {
             return this._exploredNodes.Contains(node);
         }
 
-        /* STATE-BACKUPS METHODS */
+
+        /* DIRECTION-STATE BACKUP METHODS */
         public void BackupDirectionState(string directions)
         {
             this._playerDirectionState.Add(directions);
@@ -190,12 +196,10 @@ namespace Tubes2_zainali
         {
             this._playerDirectionState.RemoveAt(this.BackupCount - 1);
         }
-
         public string GetStateBackup(int i)
         {
             return this._playerDirectionState[i];
         }
-
         public void PrintState()
         {
             for (int i = 0; i < this._playerDirectionState.Count; i++)
@@ -203,11 +207,11 @@ namespace Tubes2_zainali
                 Console.WriteLine(GetStateBackup(i));
             }
         }
-
         public int BackupCount
         {
             get { return this._playerDirectionState.Count; }
         }
+
 
         /* BACKTRACK ROUTING */
         static public string GenerateBacktrackRoute(string route)

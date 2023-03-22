@@ -153,7 +153,7 @@ namespace Tubes2_zainali
                     {
                         TSPPlayer tspPlayer = new TSPPlayer(_maze);
                         tspPlayer.StartTSPDFS();
-                        tspPlayer.BackupColoringState(tspPlayer.PlayerLog);
+                        tspPlayer.BackupColoringState();
                         logFile = tspPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
                         this._numNodes = tspPlayer._numNodes;
                         this._numSteps = tspPlayer._numSteps;
@@ -171,7 +171,7 @@ namespace Tubes2_zainali
                     {
                         DFSPlayer dfsPlayer = new DFSPlayer(_maze);
                         dfsPlayer.StartDFS();
-                        dfsPlayer.BackupColoringState(dfsPlayer.PlayerLog);
+                        dfsPlayer.BackupColoringState();
                         logFile = dfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
                         this._numNodes = dfsPlayer._numNodes;
                         this._numSteps = dfsPlayer._numSteps;
@@ -182,7 +182,7 @@ namespace Tubes2_zainali
                     {
                         BFSPlayer bfsPlayer = new BFSPlayer(_maze);
                         bfsPlayer.StartBFS();
-                        bfsPlayer.BackupColoringState(bfsPlayer.PlayerLog);
+                        bfsPlayer.BackupColoringState();
                         logFile = bfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
                         this._numNodes = bfsPlayer._numNodes;
                         this._numSteps = bfsPlayer._numSteps;
@@ -190,7 +190,6 @@ namespace Tubes2_zainali
                         this._steps = bfsPlayer._playerDirectionState;
                     }
                 }
-                MessageBox.Show(logFile);
                 LogReader baru = new LogReader(logFile);
                 _states = baru._logBoard;
                 index = 1;

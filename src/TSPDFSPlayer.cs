@@ -94,31 +94,5 @@ namespace Tubes2_zainali
             DFStoBack(currentNode, firstNode, routeTaken, "");
         }
 
-        //static void Main(string[] args)
-        //{
-        //    string directory = "../test/";
-        //    string filename = "peta.txt";
-        //    Maze maze = new Maze(directory, filename);
-        //    //BFSPlayer b1 = new BFSPlayer(maze);
-        //    //b1.StartBFS();
-        //    //b1.BackupColoringState(b1.PlayerLog);
-        //    //Console.Write(b1.Log);
-        //    //b1.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-
-        //    DFSPlayer d1 = new DFSPlayer(maze);
-        //    d1.StartDFS();
-        //    d1.BackupColoringState(d1.PlayerLog);
-        //    Console.Write(d1.Log);
-        //    d1.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-
-        //    //TSPPlayer t1 = new TSPPlayer(maze);
-        //    //t1.StartTSPDFS();
-        //    //t1.PrintState();
-        //    //t1.BackupColoringState(t1.PlayerLog);
-        //    //Console.Write(t1.Log);
-        //    //t1.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-
-        //}
-
     }
 }

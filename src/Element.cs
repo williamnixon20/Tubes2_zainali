@@ -148,9 +148,9 @@ namespace Tubes2_zainali
                 switch (_type)
                 {
                     case 'K':
-                        return new BitmapImage(new Uri("C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\assets\\start.png"));
+                        return new BitmapImage(new Uri("pack://application:,,,/assets/start.png"));
                     case 'T':
-                        return new BitmapImage(new Uri("C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\assets\\treasure.png"));
+                        return new BitmapImage(new Uri("pack://application:,,,/assets/treasure.png"));
                     default:
                         return null;
                 };

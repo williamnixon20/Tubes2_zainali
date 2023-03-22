@@ -88,7 +88,7 @@ namespace Tubes2_zainali
 
         }
 
-        public void StartTSP()
+        public void StartTSPDFS()
         {
             TSPSolverForDFS(this._mazeMap.StartPoint, 0, 0, "", "");
         }
@@ -111,7 +111,7 @@ namespace Tubes2_zainali
             string filename = "peta.txt";
             Maze maze = new Maze(directory, filename);
             TSPPlayer t = new TSPPlayer(maze);
-            t.StartTSP();
+            t.StartTSPDFS();
             t.PrintState();
             AppendFileOutput(GetStringFile());
             AppendFileOutput(t.GetStateBackup(t._playerDirectionState.Count - 1));   // langkah

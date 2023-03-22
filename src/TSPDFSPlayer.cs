@@ -94,19 +94,19 @@ namespace Tubes2_zainali
             DFStoBack(currentNode, firstNode, routeTaken, "");
         }
 
-        static void Main(string[] args)
-        {
-            // string directory = "../test/";
-            // string filename = "peta.txt";
-            // Maze maze = new Maze(directory, filename);
-            // TSPPlayer t1 = new TSPPlayer(maze);
-            // t1.StartTSPDFS();
-            // t1.PrintState();
-            // t1.BackupColoringState(t1.PlayerLog);
-            // Console.Write(t1.Log);
-            // t1.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+        // static void Main(string[] args)
+        // {
+        //     string directory = "../test/";
+        //     string filename = "peta.txt";
+        //     Maze maze = new Maze(directory, filename);
+        //     TSPPlayer t1 = new TSPPlayer(maze);
+        //     t1.StartTSPDFS();
+        //     t1.PrintState();
+        //     t1.BackupColoringState();
+        //     Console.Write(t1.Log);
+        //     t1.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
 
-        }
+        // }
 
     }
 }

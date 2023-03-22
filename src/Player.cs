@@ -66,15 +66,15 @@ namespace Tubes2_zainali
             }
             return colorState;
         }
-        public void BackupColoringState(List<string> _playerDirectionState)
+        public void BackupColoringState()
         {
             this._mazeStateLog.Add(this._mazeStateTemplate);
-            foreach (string route in _playerDirectionState)
+            foreach (string route in this._playerDirectionState)
             {
                 int[,] colorState = this.GenerateColoringState(route);
                 this._mazeStateLog.Add(colorState);
             }
-            this._solutionRoute = _playerDirectionState.Last();
+            this._solutionRoute = this._playerDirectionState.Last();
         }
 
         public int CountingNode(int[,] MazeState, int nRows, int nCols)
@@ -158,11 +158,6 @@ namespace Tubes2_zainali
         public int ExploredNodesCount
         {
             get { return this._exploredNodes.Count; }
-        }
-
-        public List<string> PlayerLog
-        {
-            get { return this._playerDirectionState; }
         }
 
         public bool IsNodeExplored(Point node)

@@ -142,7 +142,8 @@ namespace Tubes2_zainali
 
         public BitmapImage CellImage
         {
-            get {
+            get
+            {
                 // TODO URI JD RELATIF
                 switch (_type)
                 {
@@ -152,11 +153,11 @@ namespace Tubes2_zainali
                         return new BitmapImage(new Uri("C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\assets\\treasure.png"));
                     default:
                         return null;
-                }; 
+                };
             }
             set
             {
-                
+
             }
         }
 

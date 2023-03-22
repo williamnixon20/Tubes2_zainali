@@ -6,7 +6,7 @@
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         xmlns:local="clr-namespace:Tubes2_zainali"
         mc:Ignorable="d"
-        Height="600" Width="920">
+        Height="720" Width="1280">
     <!--WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
@@ -76,7 +76,7 @@
                 <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="5"
+                     Margin="10"
                      Background="Black"
                      Foreground="White"
                      Grid.Column="1" Content="File Explorer" 
@@ -90,7 +90,7 @@
                 <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="5"
+                     Margin="10,25,0,25"
                      Background="Black"
                      Foreground="White"
                      Grid.Column="1" Content="Visualize" 
@@ -108,7 +108,8 @@
                      Background="Black"
                      Foreground="White"
                      Grid.Column="1" Content="Search" 
-                     Name="buttonSearch" Click="btnSearch">
+                     Name="buttonSearch" Click="btnSearch"
+                     Visibility="Hidden">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -116,13 +117,8 @@
                     </Button.Resources>
                 </Button>
             </StackPanel>
-            <Grid Height="600" Width="670" Grid.Column="1">
-                <TextBlock Text="Output"
-                   Foreground="White"
-                   FontSize="28"
-                   HorizontalAlignment="Left"
-                   Margin="24,20,0,0"></TextBlock>
-                <ItemsControl x:Name="Board" Height="400" Width="400" Margin="115,60,95,80">
+            <Grid Height="720" Width="1030" Grid.Column="1">
+                <ItemsControl x:Name="Board" Height="500" Width="500" Margin="143,97,387,123">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate >
                             <UniformGrid Name="GridU" Background="Transparent" Rows="{Binding NRows}" Columns="{Binding NCols}"/>
@@ -148,10 +144,10 @@
                 <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Right"
-                     Margin="0,514,41,46"
+                     Margin="0,250,96,430"
                      Background="Black"
                      Foreground="White" Content="Next" 
-                     Name="btnNext" Click="btnNextClick">
+                     Name="btnNext"   Visibility="Hidden" Click="btnNextClick">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -161,17 +157,53 @@
                 <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="51,514,0,46"
+                     Margin="734,418,0,262"
                      Background="Black"
+                        Visibility="Hidden"
                      Foreground="White" Content="Prev" 
-                     Name="btnPrev" Click="btnPrevClick">
+                     Name="btnPrev"  Click="btnPrevClick">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <!--<Slider Height="26" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="426" Margin="20,20,20,20"/>-->
+                <TextBlock Text="Steps:"
+                   Foreground="White"
+                 Visibility="Hidden"
+                   Name="steps"
+                   FontSize="20"
+                           TextWrapping="Wrap"
+                                             Height="50"
+                           Width="1030" Margin="8,26,-8,644"
+                   ></TextBlock>
+                <TextBlock Text="Num Steps:"
+                   Foreground="White"
+                Visibility="Hidden"
+                   Name="numSteps"
+                                             Height="50"
+                           Width="300"
+                   FontSize="20" Margin="720,647,10,23"
+                   ></TextBlock>
+
+                <TextBlock Text="Num Nodes:"
+                   Foreground="White"
+          Visibility="Hidden"
+                   Height="50"
+                   Name="numNodes"
+                           Width="300"
+                   FontSize="20" Margin="8,646,722,24"
+                   ></TextBlock>
+
+                <TextBlock Text="Time:"
+                   Foreground="White"
+                   Height ="50"
+                    Visibility="Hidden"
+                    Name ="time"
+                   Width="300"
+                   FontSize="20" Margin="365,646,365,24"
+                   ></TextBlock>
+
             </Grid>
             <!--<ContentControl
                             Grid.Column="1"

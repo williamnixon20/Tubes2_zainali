@@ -272,14 +272,17 @@ namespace Tubes2_zainali
                 {
                     if (row[i] == 'K')
                     {
-                        ls.Add(new Element(1, 1, -2, row[i]));
-                    } else if (row[i] == 'R')
+                        ls.Add(new Element(1, 1, 0, row[i]));
+                    }
+                    else if (row[i] == 'R')
                     {
                         ls.Add(new Element(1, 1, 0, row[i]));
-                    } else if (row[i] == 'T')
+                    }
+                    else if (row[i] == 'T')
                     {
-                        ls.Add(new Element(1, 1, 1, row[i]));
-                    } else
+                        ls.Add(new Element(1, 1, 0, row[i]));
+                    }
+                    else
                     {
                         ls.Add(new Element(1, 1, -1, row[i]));
                     }

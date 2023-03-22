@@ -26,13 +26,17 @@ namespace Tubes2_zainali
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        int index = 0;
+        int index = 1;
         public string mode = "DFS";
         bool TSP = false;
         public string fileName = "";
         Maze _maze;
         List<Element> _board;
         List<List<Element>> _states;
+        List<string> _steps;
+        List<string> _numNodes;
+        List<string> _numSteps;
+        string _time;
         int nRows = 1;
         int nCols = 2;
         public int NRows
@@ -65,18 +69,6 @@ namespace Tubes2_zainali
             var template = fileInput.Template;
             var fileBox = (TextBox)template.FindName("FileBox", fileInput);
             fileName = fileBox.Text;
-            //NRows = 5;
-            //NCols = 5;
-            //_board = new List<Element>();
-            //for (int r = 0; r < nRows; r++)
-            //    for (int c = 0; c < nCols; c++)
-            //        if (r == 0)
-            //        {
-            //            _board.Add(new Element(r, c, -1));
-            //        }
-            //        else
-            //            _board.Add(new Element(r, c, r));
-            //Board.ItemsSource = _board;
         }
         private void btnNextClick(object sender, RoutedEventArgs e)
         {
@@ -84,14 +76,26 @@ namespace Tubes2_zainali
             {
                 index += 1;
                 Board.ItemsSource = _states.ElementAt(index);
+                numSteps.Text = "Num Steps: " + _numSteps[index-1];
+                steps.Text = "Steps: " + _steps[index-1];
+                numNodes.Text = "Num Nodes: " + _numNodes[index-1];
+            } else
+            {
+                MessageBox.Show("Sudah di state terakhir!");
             }
         }
         private void btnPrevClick(object sender, RoutedEventArgs e)
         {
-            if (index - 1 >= 0)
+            if (index - 1 >= 1)
             {
                 index -= 1;
                 Board.ItemsSource = _states.ElementAt(index);
+                numSteps.Text = "Num Steps: " + _numSteps[index - 1];
+                steps.Text = "Steps: " + _steps[index-1];
+                numNodes.Text = "Num Nodes: " + _numNodes[index-1];
+            } else
+            {
+                MessageBox.Show("Sudah di state paling awal!");
             }
         }
         private void RadioClick(object sender, RoutedEventArgs e)
@@ -117,9 +121,6 @@ namespace Tubes2_zainali
             if (openFileDialog.ShowDialog() == true)
             {
                 fileName = openFileDialog.FileName;
-                //MessageBox.Show(openFileDialog.FileName);
-                //LogReader baru = new LogReader(fileName);
-                //_states = baru._logBoard;
                 index = 0;
                 fileInput.Text = fileName;
             }
@@ -133,6 +134,8 @@ namespace Tubes2_zainali
                 NRows = _maze.RowCount;
                 NCols = _maze.ColCount;
                 Board.ItemsSource = _board;
+                buttonSearch.Visibility = Visibility.Visible;
+                showSearchInfo(false);
             }
             catch (Exception err)
             {
@@ -152,6 +155,14 @@ namespace Tubes2_zainali
                         tspPlayer.StartTSPDFS();
                         tspPlayer.BackupColoringState(tspPlayer.PlayerLog);
                         logFile = tspPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                        this._numNodes = tspPlayer._numNodes;
+                        this._numSteps = tspPlayer._numSteps;
+                        this._time = tspPlayer._time.ToString();
+                        this._steps = tspPlayer._playerDirectionState;
+                    } else
+                    {
+                        MessageBox.Show("Maaf, mode TSP hanya dapat dilakukan dengan DFS.");
+                        return;
                     }
                 }
                 else
@@ -162,6 +173,10 @@ namespace Tubes2_zainali
                         dfsPlayer.StartDFS();
                         dfsPlayer.BackupColoringState(dfsPlayer.PlayerLog);
                         logFile = dfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                        this._numNodes = dfsPlayer._numNodes;
+                        this._numSteps = dfsPlayer._numSteps;
+                        this._time = dfsPlayer._time.ToString();
+                        this._steps = dfsPlayer._playerDirectionState;
                     }
                     else
                     {
@@ -169,14 +184,44 @@ namespace Tubes2_zainali
                         bfsPlayer.StartBFS();
                         bfsPlayer.BackupColoringState(bfsPlayer.PlayerLog);
                         logFile = bfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                        this._numNodes = bfsPlayer._numNodes;
+                        this._numSteps = bfsPlayer._numSteps;
+                        this._time = bfsPlayer._time.ToString();
+                        this._steps = bfsPlayer._playerDirectionState;
                     }
                 }
                 MessageBox.Show(logFile);
-                LogReader baru = new LogReader(logFile, _board);
-                MessageBox.Show(baru.path);
+                LogReader baru = new LogReader(logFile);
                 _states = baru._logBoard;
-                index = 0;
+                index = 1;
                 fileInput.Text = fileName;
+                Board.ItemsSource = _states.ElementAt(index);
+                numSteps.Text = "Num Steps: " + _numSteps[index-1];
+                steps.Text = "Steps: " + _steps[index-1];
+                time.Text = "Tot time: " + _time;
+                numNodes.Text = "Num Nodes: " + _numNodes[index - 1];
+                showSearchInfo(true);
+            }
+        }
+
+        private void showSearchInfo(bool isVisible)
+        {
+            if (isVisible)
+            {
+                btnPrev.Visibility = Visibility.Visible;
+                btnNext.Visibility = Visibility.Visible;
+                numNodes.Visibility = Visibility.Visible;
+                time.Visibility = Visibility.Visible;
+                numSteps.Visibility = Visibility.Visible;
+                steps.Visibility = Visibility.Visible;
+            } else
+            {
+                btnPrev.Visibility = Visibility.Hidden;
+                btnNext.Visibility = Visibility.Hidden;
+                numNodes.Visibility = Visibility.Hidden;
+                time.Visibility = Visibility.Hidden;
+                numSteps.Visibility = Visibility.Hidden;
+                steps.Visibility = Visibility.Hidden;
             }
         }
         //private void CellClick(object sender, MouseButtonEventArgs e)

@@ -170,22 +170,21 @@ namespace Tubes2_zainali
             }
         }
         // TEST
-        // static void Main(string[] args)
-        // {
-        //     NewFileOutput();
-        //     string directory = "../test/";
-        //     string filename = "sample.txt";
-        //     Maze maze = new Maze(directory, filename);
-        //     DFSPlayer d = new DFSPlayer(maze);
-        //     d.StartDFS();
-        //     d.PrintState();
-        //     AppendFileOutput(GetStringFile());
-        //     AppendFileOutput(d.GetStateBackup(d._playerDirectionState.Count - 1));   // langkah
-        //     AppendFileOutput((d.GetStateBackup(d._playerDirectionState.Count - 1).Length).ToString());
+        static void Main(string[] args)
+        {
+            // string directory = "../test/";
+            // string filename = "sample-1.txt";
+            // Maze maze = new Maze(directory, filename);
+            // DFSPlayer d = new DFSPlayer(maze);
+            // d.StartDFS();
+            // d.PrintState();
+            // d.BackupColoringState(d.PlayerLog);
+            // Console.Write(d.Log);
+            // d.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
 
 
 
-        // }
+        }
 
     }
 

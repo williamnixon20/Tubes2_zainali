@@ -106,16 +106,16 @@ namespace Tubes2_zainali
 
         static void Main(string[] args)
         {
-            NewFileOutput();
-            string directory = "../test/";
-            string filename = "peta.txt";
-            Maze maze = new Maze(directory, filename);
-            TSPPlayer t = new TSPPlayer(maze);
-            t.StartTSPDFS();
-            t.PrintState();
-            AppendFileOutput(GetStringFile());
-            AppendFileOutput(t.GetStateBackup(t._playerDirectionState.Count - 1));   // langkah
-            AppendFileOutput((t.GetStateBackup(t._playerDirectionState.Count - 1).Length).ToString());
+            // NewFileOutput();
+            // string directory = "../test/";
+            // string filename = "peta.txt";
+            // Maze maze = new Maze(directory, filename);
+            // TSPPlayer t = new TSPPlayer(maze);
+            // t.StartTSPDFS();
+            // t.PrintState();
+            // AppendFileOutput(GetStringFile());
+            // AppendFileOutput(t.GetStateBackup(t._playerDirectionState.Count - 1));   // langkah
+            // AppendFileOutput((t.GetStateBackup(t._playerDirectionState.Count - 1).Length).ToString());
 
 
 

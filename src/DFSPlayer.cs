@@ -8,64 +8,11 @@ namespace Tubes2_zainali
 {
     public class DFSPlayer : Player
     {
-        private int nRows;
-        private int nCols;
-        private int[,] CurrentMazeCondition;
-
-        private static string StringFile = "";
-
         // CTOR
 
         public DFSPlayer(Maze loadedMaze, bool enableBranchPrune = true) : base(loadedMaze, enableBranchPrune)
         {
-            nRows = loadedMaze.RowCount;
-            nCols = loadedMaze.ColCount;
-            CurrentMazeCondition = new int[nRows, nCols];
-            for (int i = 0; i < loadedMaze.RowCount; i++)
-            {
-                for (int j = 0; j < loadedMaze.ColCount; j++)
-                {
-                    if (loadedMaze.GetMazeTile(i, j) == 'X')
-                    {
-                        CurrentMazeCondition[i, j] = -1;
-                    }
-                    else
-                    {
-                        CurrentMazeCondition[i, j] = 0;
-                    }
 
-                }
-
-            }
-        }
-        public void VisitNode(int i, int j)
-        {
-            CurrentMazeCondition[i, j]++;
-        }
-        public string StringCurrentMazeCondition()
-        {
-            for (int i = 0; i < nRows; i++)
-            {
-                for (int j = 0; j < nCols; j++)
-                {
-                    StringFile += CurrentMazeCondition[i, j];
-                    if (j < nCols - 1)
-                    {
-                        StringFile += " ";
-                    }
-                    else
-                    {
-                        StringFile += "\n";
-                    }
-                }
-            }
-            StringFile += "\n";
-
-            return StringFile;
-        }
-        public static string GetStringFile()
-        {
-            return StringFile;
         }
 
         /* DFS Solution Methods */
@@ -89,8 +36,6 @@ namespace Tubes2_zainali
                 }
                 else
                 {
-                    VisitNode(currentNode.X, currentNode.Y);
-                    StringCurrentMazeCondition();
                     if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
                     {
                         treasureCount++;
@@ -172,15 +117,15 @@ namespace Tubes2_zainali
         // TEST
         static void Main(string[] args)
         {
-            // string directory = "../test/";
-            // string filename = "sample-1.txt";
-            // Maze maze = new Maze(directory, filename);
-            // DFSPlayer d = new DFSPlayer(maze);
-            // d.StartDFS();
-            // d.PrintState();
-            // d.BackupColoringState(d.PlayerLog);
-            // Console.Write(d.Log);
-            // d.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+            string directory = "../test/";
+            string filename = "peta.txt";
+            Maze maze = new Maze(directory, filename);
+            DFSPlayer d = new DFSPlayer(maze);
+            d.StartDFS();
+            d.PrintState();
+            d.BackupColoringState(d.PlayerLog);
+            Console.Write(d.Log);
+            d.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
 
 
 

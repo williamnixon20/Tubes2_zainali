@@ -14,7 +14,7 @@ namespace Tubes2_zainali
         {
             firstNode = loadedMaze.StartPoint;
         }
-        public void DFStoBack(Point currentNode, Point endNode, string routeTaken, string backtrackRoute, int count)
+        public void DFStoBack(Point currentNode, Point endNode, string routeTaken, string backtrackRoute)
         {
             if (!this._isGoalFinished)
             {
@@ -23,17 +23,10 @@ namespace Tubes2_zainali
                 if (currentNode == endNode)
                 {
                     this._isGoalFinished = true;
-                    // DeleteAfterLastState();
                     return;
                 }
                 else
                 {
-                    if (count > 0)
-                    {
-                        VisitNode(currentNode.X, currentNode.Y);
-                        StringCurrentMazeCondition();
-                    }
-
                     this.AddExploredNode(currentNode);
 
                     List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode);
@@ -51,8 +44,7 @@ namespace Tubes2_zainali
                         char nextDirection = Maze.GetDirectionBetween(currentNode, validNeighbors[i]);
 
                         string nextRoute = routeTaken + nextDirection;
-                        count++;
-                        DFStoBack(validNeighbors[i], endNode, nextRoute, "", count);
+                        DFStoBack(validNeighbors[i], endNode, nextRoute, "");
 
                     }
 
@@ -69,17 +61,15 @@ namespace Tubes2_zainali
                         }
 
                         Point nextPoint = Maze.GetNextPoint(currentNode, rRoute[0]);
-
-                        count++;
                         if (rRoute.Length > 1)
                         {
 
-                            DFStoBack(nextPoint, endNode, routeTaken + rRoute[0], rRoute.Substring(1), count);
+                            DFStoBack(nextPoint, endNode, routeTaken + rRoute[0], rRoute.Substring(1));
                         }
                         else
                         {
 
-                            DFStoBack(nextPoint, endNode, routeTaken + rRoute[0], "", count);
+                            DFStoBack(nextPoint, endNode, routeTaken + rRoute[0], "");
                         }
                     }
 
@@ -94,30 +84,27 @@ namespace Tubes2_zainali
         }
         public void TSPSolverForDFS(Point currentNode, int treasureCount, int treasureGain, string routeTaken, string backtrackRoute)
         {
-            int count = 0;
             RecurseDFS(currentNode, treasureCount, treasureGain, routeTaken, backtrackRoute);
             this._isGoalFinished = false;
             routeTaken = this._playerDirectionState[this._playerDirectionState.Count - 1];
             currentNode = this._exploredNodes[this._exploredNodes.Count - 1];
+            this._playerDirectionState.RemoveAt(this._playerDirectionState.Count - 1);
             this._exploredNodes.Clear();
             this._isGoalFinished = false;
-            DFStoBack(currentNode, firstNode, routeTaken, "", count);
+            DFStoBack(currentNode, firstNode, routeTaken, "");
         }
 
         static void Main(string[] args)
         {
-            // NewFileOutput();
             // string directory = "../test/";
             // string filename = "peta.txt";
             // Maze maze = new Maze(directory, filename);
-            // TSPPlayer t = new TSPPlayer(maze);
-            // t.StartTSPDFS();
-            // t.PrintState();
-            // AppendFileOutput(GetStringFile());
-            // AppendFileOutput(t.GetStateBackup(t._playerDirectionState.Count - 1));   // langkah
-            // AppendFileOutput((t.GetStateBackup(t._playerDirectionState.Count - 1).Length).ToString());
-
-
+            // TSPPlayer t1 = new TSPPlayer(maze);
+            // t1.StartTSPDFS();
+            // t1.PrintState();
+            // t1.BackupColoringState(t1.PlayerLog);
+            // Console.Write(t1.Log);
+            // t1.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
 
         }
 

@@ -103,13 +103,14 @@ namespace Tubes2_zainali
                 return log.ToString();
             }
         }
-        public void SaveLog(string directory)
+        public string SaveLog(string directory)
         {
             string path = Path.Combine(directory, this.FileName);
             using (StreamWriter writer = new StreamWriter(path))
             {
                 writer.WriteLine(this.Log);
             }
+            return path;
         }
 
         /* GET PLAYER CONFIG: branch-pruning, tsp */

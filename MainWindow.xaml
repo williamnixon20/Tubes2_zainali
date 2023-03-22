@@ -5,41 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         xmlns:local="clr-namespace:Tubes2_zainali"
-        xmlns:view="clr-namespace:Tubes2_zainali.MVVM"
-        xmlns:viewModel="clr-namespace:Tubes2_zainali.MVVM"
         mc:Ignorable="d"
-        Height="600" Width="920"
-        WindowStyle="None"
+        Height="600" Width="920">
+    <!--WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
-        AllowsTransparency="True">
-    
-    <Window.DataContext>
-        <viewModel:MainViewModel></viewModel:MainViewModel>
-    </Window.DataContext>
-    
+        AllowsTransparency="True"-->
+
+
     <Border Background="#272537" CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
 
-            <TextBlock Text="Zài Nǎ Lǐ "
+
+            <StackPanel>
+                <TextBlock Text="Zài Nǎ Lǐ "
                    VerticalAlignment="Center" 
                        HorizontalAlignment="Left"
-                       Margin="20,0,0,0"
+                       Margin="20"
                        Foreground="White"
                    FontSize="22"></TextBlock>
 
-            <StackPanel Grid.Row="1">
+                <TextBlock Text="Choose Mode: "
+                   VerticalAlignment="Center" 
+                       HorizontalAlignment="Left"
+                       Margin="10,10,10,10"
+                       Foreground="White"
+                   FontSize="22"></TextBlock>
                 <RadioButton
                     Content="DFS"
                     IsChecked="True"
+                    Checked="RadioClick"
                     Height="50"
                     Foreground="White"
                     FontSize="14"
@@ -47,23 +46,136 @@
                 <RadioButton
                     Content="BFS"
                     Height="50"
+                    Checked="RadioClick"
                     Foreground="White"
                     FontSize="14"
                     Style="{StaticResource RadioTheme}"></RadioButton>
-            </StackPanel>
-            <TextBox Width="250"
+                <CheckBox Content="TSP"
+                          Height="50"
+                          Checked="TSPClick"
+                          Unchecked="TSPClick"
+                          Foreground="White"
+                          FontSize="14"
+                          Style="{StaticResource ButtonTheme}">
+                </CheckBox>
+                <TextBlock Text="File Path: "
+                   VerticalAlignment="Center" 
+                       HorizontalAlignment="Left"
+                       Margin="10,10,10,10"
+                       Foreground="White"
+                   FontSize="22"></TextBlock>
+                <TextBox Width="200"
                      Height="40"
+                     Name="fileInput"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="10"
+                     Grid.Column="1"
+                     Style="{StaticResource TextBoxTheme}" 
+                     TextChanged="fileTextChanged"/>
+                <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
                      Margin="5"
-                     Grid.Column="1"
-                     Style="{StaticResource TextBoxTheme}" TextChanged="TextBox_TextChanged">
+                     Background="Black"
+                     Foreground="White"
+                     Grid.Column="1" Content="File Explorer" 
+                     Name="btnOpenFile" Click="btnOpenFileClick">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Width="200" Height="40"                      
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="5"
+                     Background="Black"
+                     Foreground="White"
+                     Grid.Column="1" Content="Visualize" 
+                     Name="btnVis" Click="btnViz">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Width="200" Height="40"                      
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="5"
+                     Background="Black"
+                     Foreground="White"
+                     Grid.Column="1" Content="Search" 
+                     Name="buttonSearch" Click="btnSearch">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+            <Grid Height="600" Width="670" Grid.Column="1">
+                <TextBlock Text="Output"
+                   Foreground="White"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="24,20,0,0"></TextBlock>
+                <ItemsControl x:Name="Board" Height="400" Width="400" Margin="115,60,95,80">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate >
+                            <UniformGrid Name="GridU" Background="Transparent" Rows="{Binding NRows}" Columns="{Binding NCols}"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-            </TextBox>
-            <ContentControl Grid.Row="1"
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding ColorTile}" 
+                                BorderBrush="Black"
+                                BorderThickness="1" 
+                                Margin="0.5"
+                                CornerRadius="1"
+                                Tag="{Binding}">
+                                <Image 
+                                     Source="{Binding CellImage}"
+                                    Margin="2"
+                                    StretchDirection="DownOnly"></Image>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Width="200" Height="40"                      
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Right"
+                     Margin="0,514,41,46"
+                     Background="Black"
+                     Foreground="White" Content="Next" 
+                     Name="btnNext" Click="btnNextClick">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Width="200" Height="40"                      
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="51,514,0,46"
+                     Background="Black"
+                     Foreground="White" Content="Prev" 
+                     Name="btnPrev" Click="btnPrevClick">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <!--<Slider Height="26" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="426" Margin="20,20,20,20"/>-->
+            </Grid>
+            <!--<ContentControl
                             Grid.Column="1"
-                            Margin="10"
-                            Content="{Binding CurrentView}"></ContentControl>
+                            Content="{Binding CurrentView}"></ContentControl>-->
         </Grid>
     </Border>
 </Window>

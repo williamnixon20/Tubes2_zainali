@@ -77,12 +77,31 @@ namespace Tubes2_zainali
             this._solutionRoute = _playerDirectionState.Last();
         }
 
+        public int CountingNode(int[,] MazeState, int nRows, int nCols)
+        {
+            int count = 0;
+            for (int i = 0; i < nRows; i++)
+            {
+                for (int j = 0; j < nCols; j++)
+                {
+                    if (MazeState[i, j] >= 1)
+                    {
+                        count += MazeState[i, j];
+                    }
+                }
+            }
+            return count;
+        }
         public string Log
         {
             get
             {
                 StringBuilder log = new StringBuilder();
-
+                int[] NumOfSteps = new int[this._playerDirectionState.Count];
+                for (int i = 0; i < this._playerDirectionState.Count; i++)
+                {
+                    NumOfSteps[i] = this._playerDirectionState[i].Length;
+                }
                 foreach (int[,] mazeColorState in _mazeStateLog)
                 {
                     log.AppendLine('#'.ToString());
@@ -100,6 +119,18 @@ namespace Tubes2_zainali
                 }
                 log.AppendLine("$");
                 log.AppendLine(this._solutionRoute);
+                log.AppendLine("STEPS");
+                log.AppendLine("0");
+                for (int i = 0; i < this._playerDirectionState.Count; i++)
+                {
+                    log.AppendLine(NumOfSteps[i].ToString());
+                }
+                log.AppendLine("NODES");
+                for (int i = 0; i < _mazeStateLog.Count; i++)
+                {
+                    log.AppendLine(CountingNode(_mazeStateLog[i], _mazeMap.RowCount, _mazeMap.ColCount).ToString());
+                }
+
                 return log.ToString();
             }
         }

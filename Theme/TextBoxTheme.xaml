@@ -16,9 +16,9 @@
                                      VerticalAlignment="Center"
                                      Padding="5"
                                      Foreground="#CFCFCF"
-                                     x:Name="SearchBox"></TextBox>
+                                     Name="FileBox"></TextBox>
                             <TextBlock IsHitTestVisible="False"
-                                     Text="Search"
+                                     Text="Input File:"
                                      VerticalAlignment="Center"
                                      HorizontalAlignment="Left"
                                      Margin="10,0,0,0"
@@ -28,7 +28,7 @@
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=FileBox}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"></Setter>
                                             </DataTrigger>
                                         </Style.Triggers>

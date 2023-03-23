@@ -266,5 +266,33 @@ namespace Tubes2_zainali
             }
             return 'X';
         }
+
+        public List<Element> GetGridRepresentation()
+        {
+            List<Element> ls = new List<Element>();
+            foreach (List<char> row in this._mapMatrix)
+            {
+                for (int i = 0; i < row.Count; i++)
+                {
+                    if (row[i] == 'K')
+                    {
+                        ls.Add(new Element(1, 1, 0, row[i]));
+                    }
+                    else if (row[i] == 'R')
+                    {
+                        ls.Add(new Element(1, 1, 0, row[i]));
+                    }
+                    else if (row[i] == 'T')
+                    {
+                        ls.Add(new Element(1, 1, 0, row[i]));
+                    }
+                    else
+                    {
+                        ls.Add(new Element(1, 1, -1, row[i]));
+                    }
+                }
+            }
+            return ls;
+        }
     }
 }

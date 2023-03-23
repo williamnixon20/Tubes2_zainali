@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Tubes2_zainali
 {
-    public class Player
+    public abstract class Player
     {
         /* Properties & State Fields */
         protected List<Point> _exploredNodes;
@@ -225,5 +225,8 @@ namespace Tubes2_zainali
 
             return backtrack.Replace('L', 'r').Replace('R', 'l').Replace('U', 'd').Replace('D', 'u').ToUpper();
         }
+
+        /* SOLVER */
+        public abstract void StartSearch();
     }
 }

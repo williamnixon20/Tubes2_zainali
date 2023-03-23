@@ -19,7 +19,7 @@ namespace Tubes2_zainali
         
 
         /* DFS Solution Methods */
-        public void StartDFS()
+        public override void StartSearch()
         {
             RecurseDFS(this._mazeMap.StartPoint, 0, 0, "", "");
             if (this.IsTspEnabled)

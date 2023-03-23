@@ -116,7 +116,7 @@ namespace Tubes2_zainali
         }
 
         /* BFS Solution Methods */
-        public void StartBFS()
+        public override void StartSearch()
         {
             IterateBFS(this._mazeMap.StartPoint);
         }

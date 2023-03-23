@@ -137,20 +137,6 @@ namespace Tubes2_zainali
                 }
             }
         }
-
-        public static void NewFileOutput()
-        {
-            StreamWriter sw = new StreamWriter("output.txt");
-            sw.Close();
-
-        }
-        public static void AppendFileOutput(string s)
-        {
-            using (StreamWriter sw = File.AppendText("output.txt"))
-            {
-                sw.WriteLine(s);
-            }
-        }
     }
 
 }

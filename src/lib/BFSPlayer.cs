@@ -8,12 +8,6 @@ namespace Tubes2_zainali
 {
     public class BFSPlayer : Player
     {
-        // CTOR
-        public BFSPlayer(Maze loadedMaze, bool enableTsp, bool enableBranchPrune = true) : base(loadedMaze, enableBranchPrune)
-        {
-            this._tspEnabled = enableTsp;
-        }
-
         /* INNER CLASS: BFSPoint */
         public class BFSPoint
         {
@@ -113,6 +107,12 @@ namespace Tubes2_zainali
                     return Player.GenerateBacktrackRoute(this.Steps.Substring(0, this.Steps.Length - this._backtrackFlag))[0];
                 }
             }
+        }
+        
+        // CTOR
+        public BFSPlayer(Maze loadedMaze, bool enableTsp, bool enableBranchPrune = true) : base(loadedMaze, enableBranchPrune)
+        {
+            this._tspEnabled = enableTsp;
         }
 
         /* BFS Solution Methods */

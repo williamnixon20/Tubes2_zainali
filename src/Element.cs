@@ -140,7 +140,7 @@ namespace Tubes2_zainali
             }
         }
 
-        public BitmapImage CellImage
+        public BitmapImage? CellImage
         {
             get
             {
@@ -161,6 +161,6 @@ namespace Tubes2_zainali
             }
         }
 
-        public event EventHandler ColorChanged;
+        public event EventHandler? ColorChanged;
     }
 }

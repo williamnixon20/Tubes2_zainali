@@ -29,8 +29,8 @@ namespace Tubes2_zainali
         public string mode = "DFS";
         bool TSP = false;
         public string fileName = "";
-        Maze _maze;
-        List<Element> _board;
+        Maze? _maze;
+        List<Element>? _board;
         List<List<Element>> _states;
         List<string> _steps;
         List<string> _numNodes;
@@ -61,6 +61,11 @@ namespace Tubes2_zainali
             this.WindowState = WindowState.Maximized;
             InitializeComponent();
             DataContext = this;
+            this._steps = new List<string>();
+            this._states = new List<List<Element>>();
+            this._numNodes = new List<string>();
+            this._numSteps = new List<string>();
+            this._time = ""; 
         }
 
         private void fileTextChanged(object sender, TextChangedEventArgs e)
@@ -250,7 +255,7 @@ namespace Tubes2_zainali
         //    // view is notified by binding
         //    point.Color = "#00BFFF";
         //}
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         void RaisePropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

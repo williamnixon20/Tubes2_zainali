@@ -56,6 +56,8 @@ namespace Tubes2_zainali
                     }
                 }
             }
+            this._numNodes = new List<string>();
+            this._numSteps = new List<string>();
         }
 
 

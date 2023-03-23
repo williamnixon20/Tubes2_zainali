@@ -15,7 +15,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.IO;
 using Tubes2_zainali;
 using System.ComponentModel;
 
@@ -147,49 +146,68 @@ namespace Tubes2_zainali
             if (_maze != null)
             {
                 string logFile = "";
-                if (TSP)
+
+                Player krustyKrab;
+                if (mode == "DFS")
                 {
-                    if (mode == "DFS")
-                    {
-                        TSPPlayer tspPlayer = new TSPPlayer(_maze);
-                        tspPlayer.StartTSPDFS();
-                        tspPlayer.BackupColoringState();
-                        logFile = tspPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-                        this._numNodes = tspPlayer._numNodes;
-                        this._numSteps = tspPlayer._numSteps;
-                        this._time = tspPlayer._time.ToString();
-                        this._steps = tspPlayer._playerDirectionState;
-                    } else
-                    {
-                        MessageBox.Show("Maaf, mode TSP hanya dapat dilakukan dengan DFS.");
-                        return;
-                    }
+                    krustyKrab = new DFSPlayer(_maze, TSP);
                 }
                 else
                 {
-                    if (mode == "DFS")
-                    {
-                        DFSPlayer dfsPlayer = new DFSPlayer(_maze);
-                        dfsPlayer.StartDFS();
-                        dfsPlayer.BackupColoringState();
-                        logFile = dfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-                        this._numNodes = dfsPlayer._numNodes;
-                        this._numSteps = dfsPlayer._numSteps;
-                        this._time = dfsPlayer._time.ToString();
-                        this._steps = dfsPlayer._playerDirectionState;
-                    }
-                    else
-                    {
-                        BFSPlayer bfsPlayer = new BFSPlayer(_maze);
-                        bfsPlayer.StartBFS();
-                        bfsPlayer.BackupColoringState();
-                        logFile = bfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-                        this._numNodes = bfsPlayer._numNodes;
-                        this._numSteps = bfsPlayer._numSteps;
-                        this._time = bfsPlayer._time.ToString();
-                        this._steps = bfsPlayer._playerDirectionState;
-                    }
+                    krustyKrab = new BFSPlayer(_maze, TSP);
                 }
+                krustyKrab.StartSearch();
+                krustyKrab.BackupColoringState();
+                logFile = krustyKrab.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                this._numNodes = krustyKrab._numNodes;
+                this._numSteps = krustyKrab._numSteps;
+                this._time = krustyKrab._time.ToString();
+                this._steps = krustyKrab._playerDirectionState;      
+
+                // if (TSP)
+                // {
+                //     if (mode == "DFS")
+                //     {
+                //         TSPPlayer tspPlayer = new TSPPlayer(_maze);
+                //         tspPlayer.StartTSPDFS();
+                //         tspPlayer.BackupColoringState();
+                //         logFile = tspPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                //         this._numNodes = tspPlayer._numNodes;
+                //         this._numSteps = tspPlayer._numSteps;
+                //         this._time = tspPlayer._time.ToString();
+                //         this._steps = tspPlayer._playerDirectionState;
+                //     } else
+                //     {
+                //         MessageBox.Show("Maaf, mode TSP hanya dapat dilakukan dengan DFS.");
+                //         return;
+                //     }
+                // }
+                // else
+                // {
+                //     if (mode == "DFS")
+                //     {
+                //         DFSPlayer dfsPlayer = new DFSPlayer(_maze);
+                //         dfsPlayer.StartSearch();
+                //         dfsPlayer.BackupColoringState();
+                //         logFile = dfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                //         this._numNodes = dfsPlayer._numNodes;
+                //         this._numSteps = dfsPlayer._numSteps;
+                //         this._time = dfsPlayer._time.ToString();
+                //         this._steps = dfsPlayer._playerDirectionState;
+                //     }
+                //     else
+                //     {
+                //         BFSPlayer bfsPlayer = new BFSPlayer(_maze);
+                //         bfsPlayer.StartSearch();
+                //         bfsPlayer.BackupColoringState();
+                //         logFile = bfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
+                //         this._numNodes = bfsPlayer._numNodes;
+                //         this._numSteps = bfsPlayer._numSteps;
+                //         this._time = bfsPlayer._time.ToString();
+                //         this._steps = bfsPlayer._playerDirectionState;
+                //     }
+                // }
+
                 LogReader baru = new LogReader(logFile);
                 _states = baru._logBoard;
                 index = 1;

@@ -35,21 +35,35 @@ namespace Tubes2_zainali
 
         public void RecurseDFS(Point currentNode, int treasureCount, int treasureGain, string routeTaken, string backtrackRoute)
         {
+            /* DFS STOP CONDITION: clears call stack on finish */
             // if TSP is not started, continue DFS until goal is finished
             // if TSP started, continue DFS until TSP marked finished
             if ((!(!this._isTspStarted) || !this._isGoalFinished) && (!this._isTspStarted || !this._isTspFinished))
             {
+                /* SETUP */
                 this.BackupDirectionState(routeTaken);
 
+                if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
+                {
+                    treasureCount++;
+                    treasureGain++;
+                }
+
+                this.AddExploredNode(currentNode);      // mark currentNode as visited
+                if (this._isTspStarted)
+                {
+                    this._tspVisits.Add(currentNode);
+                }
+
+                /* GOAL CHECK */
                 // check for goal treasure count when not in TSP mode
                 if (!this._isGoalFinished && treasureCount == this._mazeMap.TreasureCount && !this._isTspStarted)
                 {
                     Console.WriteLine("dfs siap");
                     this._isGoalFinished = true;
-                    DeleteAfterLastState();
+                    // DeleteAfterLastState();
                     return;
                 }
-
                 // TSP: check if current point is startpoint
                 else if (this._isGoalFinished && this._isTspStarted && currentNode.X == this._mazeMap.StartPoint.X && currentNode.Y == this._mazeMap.StartPoint.Y)
                 {
@@ -59,22 +73,9 @@ namespace Tubes2_zainali
                     return;
                 }
 
-
-                /* *** DFS ROUTINE *** */
+                /* DFS ROUTINE: goal (dfs or tsp) is unsatisfied */
+                else
                 {
-
-                    if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
-                    {
-                        treasureCount++;
-                        treasureGain++;
-                    }
-
-                    this.AddExploredNode(currentNode);      // mark currentNode as visited
-                    if (this._isTspStarted)
-                    {
-                        this._tspVisits.Add(currentNode);
-                    }
-
                     List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode);
                     List<Point> validNeighbors = new List<Point>();
                     for (int i = 0; i < neighbors.Count; i++)

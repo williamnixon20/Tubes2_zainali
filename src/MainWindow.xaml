@@ -50,7 +50,7 @@
                     Foreground="White"
                     FontSize="14"
                     Style="{StaticResource RadioTheme}"></RadioButton>
-                <CheckBox Content="Enable TSP"
+                <CheckBox Content="TSP Enabled"
                           Height="50"
                           Checked="TSPClick"
                           Unchecked="TSPClick"
@@ -58,6 +58,14 @@
                           FontSize="14"
                           Style="{StaticResource ButtonTheme}">
                 </CheckBox>
+                <CheckBox Content="Pruning Enabled"
+                          Height="50"
+                          Checked="PruningClick"
+                          Unchecked="PruningClick"
+                          Foreground="White"
+                          IsChecked="True"
+                          FontSize="14"
+                          Style="{StaticResource ButtonTheme}"/>
                 <TextBlock Text="File Path: "
                    VerticalAlignment="Center" 
                        HorizontalAlignment="Left"
@@ -146,8 +154,9 @@
                      HorizontalAlignment="Right"
                      Margin="0,250,96,430"
                      Background="Black"
+                                             Visibility="Hidden"
                      Foreground="White" Content="Next" 
-                     Name="btnNext"   Visibility="Hidden" Click="btnNextClick">
+                     Name="btnNext"    Click="btnNextClick">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>
@@ -157,11 +166,25 @@
                 <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="734,418,0,262"
+                     Margin="734,316,0,364"
                      Background="Black"
-                        Visibility="Hidden"
+                      Visibility="Hidden"
                      Foreground="White" Content="Prev" 
                      Name="btnPrev"  Click="btnPrevClick">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Width="200" Height="40"                      
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="734,442,0,238"
+                     Background="Black"
+                     Visibility="Hidden"
+                     Foreground="White" Content="Auto: Off" 
+                     Name="btnAuto"  Click="clickAuto">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="7"/>

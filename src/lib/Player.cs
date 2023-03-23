@@ -168,6 +168,10 @@ namespace Tubes2_zainali
         {
             get { return this._branchPruningEnabled; }
         }
+        public void setBranchPruning(bool value)
+        {
+            _branchPruningEnabled = value;
+        }
         public bool IsTspEnabled
         {
             get { return this._tspEnabled; }

@@ -45,6 +45,10 @@ namespace Tubes2_zainali
                             tile = tile.Substring(1);
                             int tileColor;
                             var isNumeric = int.TryParse(tile, out tileColor);
+                            if (tileType == 'T' && tileColor != 0)
+                            {
+                                tileType = 'R';
+                            }
                             if (isNumeric)
                             {
                                 currentState.Add(new Element(i, j, tileColor, tileType));

@@ -28,6 +28,7 @@ namespace Tubes2_zainali
         int _stateViewIndex = 1;
         public string _searchMode = "DFS";
         bool _tspToggle = false;
+        bool _pruningToggle = false;
         public string _configFileName = "";
         Maze? _maze;
         List<Element>? _board;
@@ -38,6 +39,8 @@ namespace Tubes2_zainali
         string _totalTime;
         int _nGridRows = 1;
         int _nGridCols = 2;
+        int _autoSpeed = 0;
+        int SPEED_STATE = 9;
         public int NRows
         {
             get { return _nGridRows; }
@@ -146,6 +149,16 @@ namespace Tubes2_zainali
                 MessageBox.Show(err.Message);
             }
         }
+        private void PruningClick(object sender, RoutedEventArgs e)
+        {
+            if (_pruningToggle == false)
+            {
+                _pruningToggle = true;
+            } else
+            {
+                _pruningToggle = false;
+            }
+        }
         private void btnSearch(object sender, RoutedEventArgs e)
         {
             if (_maze != null)
@@ -160,6 +173,11 @@ namespace Tubes2_zainali
                 else
                 {
                     krustyKrab = new BFSPlayer(_maze, _tspToggle);
+                }
+                // True by default
+                if (_pruningToggle == false)
+                {
+                    krustyKrab.setBranchPruning(_pruningToggle);
                 }
                 krustyKrab.StartSearch();
                 krustyKrab.BackupColoringState();
@@ -182,6 +200,50 @@ namespace Tubes2_zainali
                 showSearchInfo(true);
             }
         }
+        private async void clickAuto(object sender, RoutedEventArgs e)
+        {
+            _autoSpeed = (_autoSpeed + 1) % SPEED_STATE;
+            if (_autoSpeed == 0)
+            {
+                btnAuto.Content = "Auto : Off";
+                return;
+            } else
+            {
+                btnAuto.Content = "Auto : " + ((SPEED_STATE-1) / (float)_autoSpeed * 50).ToString() + " ms";
+                await TransitionState(_autoSpeed);
+            }
+        }
+
+        internal async Task TransitionState(int autoSpeed)
+        {
+            while (_autoSpeed == autoSpeed)
+            {
+                if (_stateViewIndex + 1 < _states.Count())
+                {
+                    _stateViewIndex += 1;
+                    Board.ItemsSource = _states.ElementAt(_stateViewIndex);
+                    numSteps.Text = "Num Steps: " + _numSteps[_stateViewIndex - 1];
+                    steps.Text = "Steps: " + _steps[_stateViewIndex - 1];
+                    numNodes.Text = "Num Nodes: " + _numNodes[_stateViewIndex - 1];
+                }
+                else
+                {
+                    _stateViewIndex = 1;
+                }
+                //textBox.Dispatcher.Invoke(() =>
+                //{
+                //    // UI operation goes inside of Invoke
+                //    textBox.Text += ".";
+                //    // Note that: 
+                //    //    Dispatcher.Invoke() blocks the UI thread anyway
+                //    //    but without it you can't modify UI objects from another thread
+                //});
+
+                // CPU-bound or I/O-bound operation goes outside of Invoke
+                // await won't block UI thread, unless it's run in a synchronous context
+                await Task.Delay((int)((SPEED_STATE - 1) / (float)_autoSpeed * 50));
+            }
+        }
 
         private void showSearchInfo(bool isVisible)
         {
@@ -193,6 +255,7 @@ namespace Tubes2_zainali
                 time.Visibility = Visibility.Visible;
                 numSteps.Visibility = Visibility.Visible;
                 steps.Visibility = Visibility.Visible;
+                btnAuto.Visibility = Visibility.Visible;
             } else
             {
                 btnPrev.Visibility = Visibility.Hidden;
@@ -201,6 +264,9 @@ namespace Tubes2_zainali
                 time.Visibility = Visibility.Hidden;
                 numSteps.Visibility = Visibility.Hidden;
                 steps.Visibility = Visibility.Hidden;
+                btnAuto.Visibility = Visibility.Hidden;
+                _autoSpeed = 0;
+                btnAuto.Content = "Auto : Off";
             }
         }
 

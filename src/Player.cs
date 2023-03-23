@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Tubes2_zainali
 {
-    public class Player
+    public abstract class Player
     {
         /* Properties & State Fields */
         protected List<Point> _exploredNodes;
@@ -17,6 +17,8 @@ namespace Tubes2_zainali
         public List<string> _numNodes;
         public float _time;
         protected bool _isGoalFinished;
+        protected bool _isTspStarted;
+        protected bool _isTspFinished;
 
         /* Config Fields */
         protected bool _branchPruningEnabled;
@@ -192,9 +194,10 @@ namespace Tubes2_zainali
         {
             this._playerDirectionState.Add(directions);
         }
-        public void DeleteAfterLastState()
+        public void DeleteLastState()
         {
             this._playerDirectionState.RemoveAt(this.BackupCount - 1);
+            this._exploredNodes.RemoveAt(this.ExploredNodesCount - 1);
         }
         public string GetStateBackup(int i)
         {
@@ -222,5 +225,8 @@ namespace Tubes2_zainali
 
             return backtrack.Replace('L', 'r').Replace('R', 'l').Replace('U', 'd').Replace('D', 'u').ToUpper();
         }
+
+        /* SOLVER */
+        public abstract void StartSearch();
     }
 }

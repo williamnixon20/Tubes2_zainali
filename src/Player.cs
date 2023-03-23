@@ -184,9 +184,10 @@ namespace Tubes2_zainali
         {
             this._playerDirectionState.Add(directions);
         }
-        public void DeleteAfterLastState()
+        public void DeleteLastState()
         {
             this._playerDirectionState.RemoveAt(this.BackupCount - 1);
+            this._exploredNodes.RemoveAt(this.ExploredNodesCount - 1);
         }
         public string GetStateBackup(int i)
         {

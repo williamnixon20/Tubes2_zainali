@@ -28,7 +28,7 @@ namespace Tubes2_zainali
                 Point newStart = Maze.GetNextPoint(this._mazeMap.StartPoint, route);
                 this._isTspStarted = true;
 
-                DeleteAfterLastState();     // remove duplicate step from before TSP
+                DeleteLastState();     // remove duplicate step from before TSP
                 RecurseDFS(newStart, this._mazeMap.TreasureCount, 0, route, "");
             }
         }
@@ -147,23 +147,6 @@ namespace Tubes2_zainali
                 sw.WriteLine(s);
             }
         }
-        // TEST
-        // static void Main(string[] args)
-        // {
-        //     string directory = "../test/";
-        //     string filename = "peta.txt";
-        //     Maze maze = new Maze(directory, filename);
-        //     DFSPlayer d = new DFSPlayer(maze);
-        //     d.StartDFS();
-        //     d.PrintState();
-        //     d.BackupColoringState(d.PlayerLog);
-        //     Console.Write(d.Log);
-        //     d.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-
-
-
-        // }
-
     }
 
 }

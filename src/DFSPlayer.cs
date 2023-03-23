@@ -8,46 +8,79 @@ namespace Tubes2_zainali
 {
     public class DFSPlayer : Player
     {
-        // CTOR
+        List<Point> _tspVisits;
 
-        public DFSPlayer(Maze loadedMaze, bool enableBranchPrune = true) : base(loadedMaze, enableBranchPrune)
+        /* CTOR */
+        public DFSPlayer(Maze loadedMaze, bool enableTsp, bool enableBranchPrune = true) : base(loadedMaze, enableBranchPrune)
         {
-
+            this._tspEnabled = enableTsp;
+            this._tspVisits = new List<Point>();
         }
+        
 
         /* DFS Solution Methods */
         public void StartDFS()
         {
             RecurseDFS(this._mazeMap.StartPoint, 0, 0, "", "");
+            if (this.IsTspEnabled)
+            {
+                string route = this.GetStateBackup(this.BackupCount - 1);
+                Point newStart = Maze.GetNextPoint(this._mazeMap.StartPoint, route);
+                this._isTspStarted = true;
+
+                DeleteAfterLastState();     // remove duplicate step from before TSP
+                RecurseDFS(newStart, this._mazeMap.TreasureCount, 0, route, "");
+            }
         }
 
         public void RecurseDFS(Point currentNode, int treasureCount, int treasureGain, string routeTaken, string backtrackRoute)
         {
-
-            if (!this._isGoalFinished)
+            // if TSP is not started, continue DFS until goal is finished
+            // if TSP started, continue DFS until TSP marked finished
+            if ((!(!this._isTspStarted) || !this._isGoalFinished) && (!this._isTspStarted || !this._isTspFinished))
             {
                 this.BackupDirectionState(routeTaken);
 
-                if (treasureCount == this._mazeMap.TreasureCount)
+                // check for goal treasure count when not in TSP mode
+                if (!this._isGoalFinished && treasureCount == this._mazeMap.TreasureCount && !this._isTspStarted)
                 {
+                    Console.WriteLine("dfs siap");
                     this._isGoalFinished = true;
                     DeleteAfterLastState();
                     return;
                 }
-                else
+
+                // TSP: check if current point is startpoint
+                else if (this._isGoalFinished && this._isTspStarted && currentNode.X == this._mazeMap.StartPoint.X && currentNode.Y == this._mazeMap.StartPoint.Y)
                 {
+                    Console.WriteLine("tsp siap");
+                    this._isTspFinished = true;
+                    // DeleteAfterLastState() not needed
+                    return;
+                }
+
+
+                /* *** DFS ROUTINE *** */
+                {
+
                     if (this._mazeMap.GetMazeTile(currentNode) == 'T' && !this.IsNodeExplored(currentNode))   // found new treasure
                     {
                         treasureCount++;
                         treasureGain++;
                     }
-                    this.AddExploredNode(currentNode);
+
+                    this.AddExploredNode(currentNode);      // mark currentNode as visited
+                    if (this._isTspStarted)
+                    {
+                        this._tspVisits.Add(currentNode);
+                    }
 
                     List<Point> neighbors = this._mazeMap.GetNeighbors(currentNode);
                     List<Point> validNeighbors = new List<Point>();
                     for (int i = 0; i < neighbors.Count; i++)
                     {
-                        if (!this.IsNodeExplored(neighbors[i]) && this._mazeMap.IsWalkable(neighbors[i]))
+                        // restrict validNeighbors to walkable nodes; and if not isTspStarted => restrict validNeighbors to unexplored nodes; and if TspStarted => restrict to unvisited from new startpoint
+                        if (this._mazeMap.IsWalkable(neighbors[i]) && (!(!this._isTspStarted) || !this.IsNodeExplored(neighbors[i])) && (!this._isTspStarted || !this._tspVisits.Contains(neighbors[i])))
                         {
                             validNeighbors.Add(neighbors[i]);
                         }
@@ -73,7 +106,9 @@ namespace Tubes2_zainali
 
                     }
 
-                    if (validNeighbors.Count == 0 && (!this.IsBranchPruningEnabled || treasureGain != 0))  // do backtrack when current route has collected treasure; pruningEnabled => check treasure gain
+                    // Backtracking: do backtrack when current route has collected treasure; pruningEnabled => check treasure gain
+                    //               disable backtracking when doing TSP
+                    if (validNeighbors.Count == 0 && (!this.IsBranchPruningEnabled || treasureGain != 0) && !this._isTspStarted)  
                     {
                         string rRoute;
                         if (backtrackRoute != "")   // is already in backtrack mode
@@ -96,7 +131,6 @@ namespace Tubes2_zainali
                             RecurseDFS(nextPoint, treasureCount, treasureGain, routeTaken + rRoute[0], "");
                         }
                     }
-
                 }
             }
         }

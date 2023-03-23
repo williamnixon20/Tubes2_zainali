@@ -13,6 +13,8 @@ namespace Tubes2_zainali
         protected List<Point> _exploredNodes;
         protected List<string> _playerDirectionState;
         protected bool _isGoalFinished;
+        protected bool _isTspStarted;
+        protected bool _isTspFinished;
 
         /* Config Fields */
         protected Maze _mazeMap;

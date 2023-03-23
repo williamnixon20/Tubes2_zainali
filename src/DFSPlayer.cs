@@ -61,15 +61,13 @@ namespace Tubes2_zainali
                 {
                     Console.WriteLine("dfs siap");
                     this._isGoalFinished = true;
-                    // DeleteAfterLastState();
                     return;
                 }
                 // TSP: check if current point is startpoint
-                else if (this._isGoalFinished && this._isTspStarted && currentNode.X == this._mazeMap.StartPoint.X && currentNode.Y == this._mazeMap.StartPoint.Y)
+                else if (this._isGoalFinished && this._isTspStarted && currentNode == this._mazeMap.StartPoint)
                 {
                     Console.WriteLine("tsp siap");
                     this._isTspFinished = true;
-                    // DeleteAfterLastState() not needed
                     return;
                 }
 

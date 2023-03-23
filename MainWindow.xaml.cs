@@ -35,7 +35,7 @@ namespace Tubes2_zainali
         List<string> _steps;
         List<string> _numNodes;
         List<string> _numSteps;
-        string _displayTime;
+        string _totalTime;
         int _nGridRows = 1;
         int _nGridCols = 2;
         public int NRows
@@ -65,7 +65,7 @@ namespace Tubes2_zainali
             this._states = new List<List<Element>>();
             this._numNodes = new List<string>();
             this._numSteps = new List<string>();
-            this._displayTime = ""; 
+            this._totalTime = ""; 
         }
 
         private void fileTextChanged(object sender, TextChangedEventArgs e)
@@ -166,7 +166,7 @@ namespace Tubes2_zainali
                 logFile = krustyKrab.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
                 this._numNodes = krustyKrab._numNodes;
                 this._numSteps = krustyKrab._numSteps;
-                this._displayTime = krustyKrab._time.ToString();
+                this._totalTime = krustyKrab._recordedSearchTime.ToString();
                 this._steps = krustyKrab._playerDirectionState;      
 
 
@@ -177,7 +177,7 @@ namespace Tubes2_zainali
                 Board.ItemsSource = _states.ElementAt(_stateViewIndex);
                 numSteps.Text = "Num Steps: " + _numSteps[_stateViewIndex-1];
                 steps.Text = "Steps: " + _steps[_stateViewIndex-1];
-                time.Text = "Tot time: " + _displayTime;
+                time.Text = "Tot time: " + _totalTime + " ms";
                 numNodes.Text = "Num Nodes: " + _numNodes[_stateViewIndex - 1];
                 showSearchInfo(true);
             }
@@ -203,7 +203,7 @@ namespace Tubes2_zainali
                 steps.Visibility = Visibility.Hidden;
             }
         }
-        
+
         public event PropertyChangedEventHandler? PropertyChanged;
         void RaisePropertyChanged(string propertyName)
         {

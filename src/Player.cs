@@ -15,7 +15,7 @@ namespace Tubes2_zainali
         public List<string> _playerDirectionState;
         public List<string> _numSteps;
         public List<string> _numNodes;
-        public float _time;
+        public long _recordedSearchTime;
         protected bool _isGoalFinished;
         protected bool _isTspStarted;
         protected bool _isTspFinished;
@@ -134,17 +134,15 @@ namespace Tubes2_zainali
                     log.AppendLine(colorState.ToString());
                 }
                 log.AppendLine("$");
-                //for (int i = 0; i < this._playerDirectionState.Count; i++)
-                //{
-                //    log.AppendLine(_playerDirectionState[i].ToString());
-                //}
-                //log.AppendLine("STEPS");
+
+                // STEPS
                 _numSteps = new List<string>();
                 for (int i = 0; i < this._playerDirectionState.Count; i++)
                 {
                     _numSteps.Add(NumOfSteps[i].ToString());
                 }
-                //log.AppendLine("NODES");
+
+                // NODES
                 _numNodes = new List<string>();
                 for (int i = 0; i < this._playerDirectionState.Count; i++)
                 {

@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Tubes2_zainali
 {
@@ -21,6 +21,8 @@ namespace Tubes2_zainali
         /* DFS Solution Methods */
         public override void StartSearch()
         {
+            Stopwatch searchTimer = new Stopwatch();
+            searchTimer.Start();
             RecurseDFS(this._mazeMap.StartPoint, 0, 0, "", "");
             if (this.IsTspEnabled)
             {
@@ -31,6 +33,8 @@ namespace Tubes2_zainali
                 DeleteLastState();     // remove duplicate step from before TSP
                 RecurseDFS(newStart, this._mazeMap.TreasureCount, 0, route, "");
             }
+            searchTimer.Stop();
+            this._recordedSearchTime = searchTimer.ElapsedMilliseconds;
         }
 
         public void RecurseDFS(Point currentNode, int treasureCount, int treasureGain, string routeTaken, string backtrackRoute)

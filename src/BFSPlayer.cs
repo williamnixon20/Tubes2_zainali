@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Tubes2_zainali
 {
@@ -118,7 +118,12 @@ namespace Tubes2_zainali
         /* BFS Solution Methods */
         public override void StartSearch()
         {
+            Stopwatch searchTimer = new Stopwatch();
+            searchTimer.Start();
             IterateBFS(this._mazeMap.StartPoint);
+            searchTimer.Stop();
+            this._recordedSearchTime = searchTimer.ElapsedMilliseconds;
+
         }
 
         public void IterateBFS(Point startNode)

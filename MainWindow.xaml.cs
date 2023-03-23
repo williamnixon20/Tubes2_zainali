@@ -25,34 +25,34 @@ namespace Tubes2_zainali
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        int index = 1;
-        public string mode = "DFS";
-        bool TSP = false;
-        public string fileName = "";
+        int _stateViewIndex = 1;
+        public string _searchMode = "DFS";
+        bool _tspToggle = false;
+        public string _configFileName = "";
         Maze? _maze;
         List<Element>? _board;
         List<List<Element>> _states;
         List<string> _steps;
         List<string> _numNodes;
         List<string> _numSteps;
-        string _time;
-        int nRows = 1;
-        int nCols = 2;
+        string _displayTime;
+        int _nGridRows = 1;
+        int _nGridCols = 2;
         public int NRows
         {
-            get { return nRows; }
+            get { return _nGridRows; }
             set
             {
-                nRows = value;
+                _nGridRows = value;
                 RaisePropertyChanged(nameof(NRows));
             }
         }
         public int NCols
         {
-            get { return nCols; }
+            get { return _nGridCols; }
             set
             {
-                nCols = value;
+                _nGridCols = value;
                 RaisePropertyChanged(nameof(NCols));
             }
         }
@@ -65,24 +65,24 @@ namespace Tubes2_zainali
             this._states = new List<List<Element>>();
             this._numNodes = new List<string>();
             this._numSteps = new List<string>();
-            this._time = ""; 
+            this._displayTime = ""; 
         }
 
         private void fileTextChanged(object sender, TextChangedEventArgs e)
         {
             var template = fileInput.Template;
             var fileBox = (TextBox)template.FindName("FileBox", fileInput);
-            fileName = fileBox.Text;
+            _configFileName = fileBox.Text;
         }
         private void btnNextClick(object sender, RoutedEventArgs e)
         {
-            if (index + 1 < _states.Count())
+            if (_stateViewIndex + 1 < _states.Count())
             {
-                index += 1;
-                Board.ItemsSource = _states.ElementAt(index);
-                numSteps.Text = "Num Steps: " + _numSteps[index-1];
-                steps.Text = "Steps: " + _steps[index-1];
-                numNodes.Text = "Num Nodes: " + _numNodes[index-1];
+                _stateViewIndex += 1;
+                Board.ItemsSource = _states.ElementAt(_stateViewIndex);
+                numSteps.Text = "Num Steps: " + _numSteps[_stateViewIndex-1];
+                steps.Text = "Steps: " + _steps[_stateViewIndex-1];
+                numNodes.Text = "Num Nodes: " + _numNodes[_stateViewIndex-1];
             } else
             {
                 MessageBox.Show("Sudah di state terakhir!");
@@ -90,13 +90,13 @@ namespace Tubes2_zainali
         }
         private void btnPrevClick(object sender, RoutedEventArgs e)
         {
-            if (index - 1 >= 1)
+            if (_stateViewIndex - 1 >= 1)
             {
-                index -= 1;
-                Board.ItemsSource = _states.ElementAt(index);
-                numSteps.Text = "Num Steps: " + _numSteps[index - 1];
-                steps.Text = "Steps: " + _steps[index-1];
-                numNodes.Text = "Num Nodes: " + _numNodes[index-1];
+                _stateViewIndex -= 1;
+                Board.ItemsSource = _states.ElementAt(_stateViewIndex);
+                numSteps.Text = "Num Steps: " + _numSteps[_stateViewIndex - 1];
+                steps.Text = "Steps: " + _steps[_stateViewIndex-1];
+                numNodes.Text = "Num Nodes: " + _numNodes[_stateViewIndex-1];
             } else
             {
                 MessageBox.Show("Sudah di state paling awal!");
@@ -105,18 +105,18 @@ namespace Tubes2_zainali
         private void RadioClick(object sender, RoutedEventArgs e)
         {
             var radio = (RadioButton)sender;
-            mode = (string)radio.Content;
+            _searchMode = (string)radio.Content;
 
         }
         private void TSPClick(object sender, RoutedEventArgs e)
         {
-            if (TSP == false)
+            if (_tspToggle == false)
             {
-                TSP = true;
+                _tspToggle = true;
             }
             else
             {
-                TSP = false;
+                _tspToggle = false;
             }
         }
         private void btnOpenFileClick(object sender, RoutedEventArgs e)
@@ -124,16 +124,16 @@ namespace Tubes2_zainali
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                fileName = openFileDialog.FileName;
-                index = 0;
-                fileInput.Text = fileName;
+                _configFileName = openFileDialog.FileName;
+                _stateViewIndex = 0;
+                fileInput.Text = _configFileName;
             }
         }
         private void btnViz(object sender, RoutedEventArgs e)
         {
             try
             {
-                _maze = new Maze("", fileName);
+                _maze = new Maze("", _configFileName);
                 _board = _maze.GetGridRepresentation();
                 NRows = _maze.RowCount;
                 NCols = _maze.ColCount;
@@ -153,75 +153,32 @@ namespace Tubes2_zainali
                 string logFile = "";
 
                 Player krustyKrab;
-                if (mode == "DFS")
+                if (_searchMode == "DFS")
                 {
-                    krustyKrab = new DFSPlayer(_maze, TSP);
+                    krustyKrab = new DFSPlayer(_maze, _tspToggle);
                 }
                 else
                 {
-                    krustyKrab = new BFSPlayer(_maze, TSP);
+                    krustyKrab = new BFSPlayer(_maze, _tspToggle);
                 }
                 krustyKrab.StartSearch();
                 krustyKrab.BackupColoringState();
                 logFile = krustyKrab.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
                 this._numNodes = krustyKrab._numNodes;
                 this._numSteps = krustyKrab._numSteps;
-                this._time = krustyKrab._time.ToString();
+                this._displayTime = krustyKrab._time.ToString();
                 this._steps = krustyKrab._playerDirectionState;      
 
-                // if (TSP)
-                // {
-                //     if (mode == "DFS")
-                //     {
-                //         TSPPlayer tspPlayer = new TSPPlayer(_maze);
-                //         tspPlayer.StartTSPDFS();
-                //         tspPlayer.BackupColoringState();
-                //         logFile = tspPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-                //         this._numNodes = tspPlayer._numNodes;
-                //         this._numSteps = tspPlayer._numSteps;
-                //         this._time = tspPlayer._time.ToString();
-                //         this._steps = tspPlayer._playerDirectionState;
-                //     } else
-                //     {
-                //         MessageBox.Show("Maaf, mode TSP hanya dapat dilakukan dengan DFS.");
-                //         return;
-                //     }
-                // }
-                // else
-                // {
-                //     if (mode == "DFS")
-                //     {
-                //         DFSPlayer dfsPlayer = new DFSPlayer(_maze);
-                //         dfsPlayer.StartSearch();
-                //         dfsPlayer.BackupColoringState();
-                //         logFile = dfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-                //         this._numNodes = dfsPlayer._numNodes;
-                //         this._numSteps = dfsPlayer._numSteps;
-                //         this._time = dfsPlayer._time.ToString();
-                //         this._steps = dfsPlayer._playerDirectionState;
-                //     }
-                //     else
-                //     {
-                //         BFSPlayer bfsPlayer = new BFSPlayer(_maze);
-                //         bfsPlayer.StartSearch();
-                //         bfsPlayer.BackupColoringState();
-                //         logFile = bfsPlayer.SaveLog(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
-                //         this._numNodes = bfsPlayer._numNodes;
-                //         this._numSteps = bfsPlayer._numSteps;
-                //         this._time = bfsPlayer._time.ToString();
-                //         this._steps = bfsPlayer._playerDirectionState;
-                //     }
-                // }
 
                 LogReader baru = new LogReader(logFile);
                 _states = baru._logBoard;
-                index = 1;
-                fileInput.Text = fileName;
-                Board.ItemsSource = _states.ElementAt(index);
-                numSteps.Text = "Num Steps: " + _numSteps[index-1];
-                steps.Text = "Steps: " + _steps[index-1];
-                time.Text = "Tot time: " + _time;
-                numNodes.Text = "Num Nodes: " + _numNodes[index - 1];
+                _stateViewIndex = 1;
+                fileInput.Text = _configFileName;
+                Board.ItemsSource = _states.ElementAt(_stateViewIndex);
+                numSteps.Text = "Num Steps: " + _numSteps[_stateViewIndex-1];
+                steps.Text = "Steps: " + _steps[_stateViewIndex-1];
+                time.Text = "Tot time: " + _displayTime;
+                numNodes.Text = "Num Nodes: " + _numNodes[_stateViewIndex - 1];
                 showSearchInfo(true);
             }
         }
@@ -246,15 +203,7 @@ namespace Tubes2_zainali
                 steps.Visibility = Visibility.Hidden;
             }
         }
-        //private void CellClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    var border = (Border)sender;
-        //    // each point has unique {X;Y} coordinates
-        //    var point = (Element)border.Tag;
-        //    // changing color in item view model
-        //    // view is notified by binding
-        //    point.Color = "#00BFFF";
-        //}
+        
         public event PropertyChangedEventHandler? PropertyChanged;
         void RaisePropertyChanged(string propertyName)
         {

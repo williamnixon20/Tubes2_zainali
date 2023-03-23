@@ -22,7 +22,7 @@
 
 
             <StackPanel>
-                <TextBlock Text="Zài Nǎ Lǐ "
+                <TextBlock Text="在哪里 ~ Zài Nǎ Lǐ"
                    VerticalAlignment="Center" 
                        HorizontalAlignment="Left"
                        Margin="20"
@@ -104,7 +104,7 @@
                 <Button Width="200" Height="40"                      
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="5"
+                     Margin="10"
                      Background="Black"
                      Foreground="White"
                      Grid.Column="1" Content="Search" 

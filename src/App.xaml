@@ -6,13 +6,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Theme/RadioTheme.xaml">
+                <ResourceDictionary Source="theme/RadioTheme.xaml">
 
                 </ResourceDictionary>
-                <ResourceDictionary Source="Theme/TextBoxTheme.xaml">
+                <ResourceDictionary Source="theme/TextBoxTheme.xaml">
 
                 </ResourceDictionary>
-                <ResourceDictionary Source="Theme/ButtonTheme.xaml">
+                <ResourceDictionary Source="theme/ButtonTheme.xaml">
 
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

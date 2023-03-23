@@ -10,13 +10,13 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Theme\ButtonTheme.xaml">
+    <Page Update="theme\ButtonTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Theme\RadioTheme.xaml">
+    <Page Update="theme\RadioTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Theme\TextBoxTheme.xaml">
+    <Page Update="theme\TextBoxTheme.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

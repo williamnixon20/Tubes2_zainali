@@ -11,7 +11,7 @@ namespace Tubes2_zainali
         private int _nRows;
         private int _nCols;
         private Point _mazeStart;
-        private HashSet<Point> _treasureSet;
+        private List<Point> _treasureSet;
 
         /* CTOR */
         public Maze(string mapConfig)
@@ -19,7 +19,7 @@ namespace Tubes2_zainali
             mapConfig = mapConfig.TrimEnd('\r', '\n', ' ');      // remove trailing newline from config text
             this._mapMatrix = new List<List<char>>();
             this._mazeStart = new Point(-1, -1);
-            this._treasureSet = new HashSet<Point>();
+            this._treasureSet = new List<Point>();
 
             // Check syntax of file
             string mapConfigSyntax = @"^([KTRX][\s\n])+$";
@@ -81,6 +81,10 @@ namespace Tubes2_zainali
                 this._mapMatrix.Add(currentRow);
             }
 
+            if (this.TreasureCount == 0)
+            {
+                throw new MapFileException("Map Configuration has no treasure.");
+            }
             this._nRows = this._mapMatrix.Count;
             this._nCols = colCount;
         }

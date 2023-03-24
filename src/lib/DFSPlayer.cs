@@ -96,7 +96,7 @@ namespace Tubes2_zainali
 
                         string nextRoute = routeTaken + nextDirection;
                         int branchGain;
-                        if (validNeighbors.Count > 1)
+                        if (validNeighbors.Count > 1 && this._mazeMap.GetMazeTile(currentNode) != 'T')
                         {
                             branchGain = 0;
                         }

@@ -197,7 +197,7 @@ namespace Tubes2_zainali
                     char nextDirection = Maze.GetDirectionBetween(currentNode.Point, validNeighbors[i]);
 
                     int nextBranchGain;
-                    if (validNeighbors.Count > 1)
+                    if (validNeighbors.Count > 1 && this._mazeMap.GetMazeTile(currentNode.Point) != 'T')
                     {
                         nextBranchGain = 0;
                     }

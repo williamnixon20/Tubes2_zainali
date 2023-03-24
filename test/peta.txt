@@ -1,4 +1,0 @@
-K R R R
-X R X T
-R T T X
-T R X X 

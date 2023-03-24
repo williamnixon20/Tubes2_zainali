@@ -1,4 +1,4 @@
-# zainali?!? - Pengaplikasian Algoritma BFS dan DFS dalam Menyelesaikan Persoalan Maze Treasure Hunt
+# Zainali?!? - Pengaplikasian Algoritma BFS dan DFS dalam Menyelesaikan Persoalan Maze Treasure Hunt
 
 ```
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠶⣤⣄⣠⢤⣄⣤⢤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -62,27 +62,27 @@ This project is implemented as a C# Application and is built to meet the followi
 ## How To Compile
 1. Clone this repository.
 
-```
- $ git clone git@github.com:williamnixon20/Tubes2_zainali.git
+```powershell
+git clone git@github.com:williamnixon20/Tubes2_zainali.git
  ```
 
 or similarly,
 
-```
- $ git clone https://github.com/williamnixon20/Tubes2_zainali.git
+```powershell
+git clone https://github.com/williamnixon20/Tubes2_zainali.git
 ```
 
 2. Open terminal and navigate to the root directory of this repository.
 3. Run the following command in terminal.
 
-```
- $ msbuild src/Tubes2_zainali.csproj /p:OutputPath=..\bin\ /p:Configuration=Release
+```powershell
+msbuild src/Tubes2_zainali.csproj /p:OutputPath=..\bin\ /p:Configuration=Release
 ```
 
 4. The resulting executable file will be located at the `bin` directory.
 5. \[Troubleshooting\] If the `obj` files in `src` are modified or missing, and are causing compile issues, try navigating to `src` and run
-```
- $ dotnet restore
+```powershell
+dotnet restore
 ```
 
 
@@ -91,28 +91,32 @@ or similarly,
 1. After [compiling the program](#how-to-compile), navigate to the root directory in terminal.
 2. Enter the following command to run the program.
 
-```
- $ .\bin\Tubes2_zainali.exe
+```powershell
+.\bin\Tubes2_zainali.exe
 ```
 or similarly,
-```
- $ dotnet .\bin\Tubes2_zainali.dll
+```powershell
+dotnet .\bin\Tubes2_zainali.dll
 ```
 4. Alternatively, navigate to the `bin` folder using *Windows Explorer* and run `Tubes2_zainali.exe`.
 
 ## How To Use Program
+
+![Program GUI Demonstration](./extras//demo.jpg)
+
 1. [Compile](#how-to-compile) and [run](#how-to-run) the program.
 2. To load custom maze configurations, create `.txt` files containing `K`s, `T`s, `R`s, and `X`s arranged in a rectangular grid. Configuration file syntax can be referred from sample test cases in `test` directory.
 
->K : Krusty Krab (Start Point), only one start point per maze<br>
->T : Treasure, must have at least one treasure per maze<br>
->R : Walkable maze path<br>
->X : Maze walls<br>
+>**Guide for Configuration Files**<br>
+K : Krusty Krab (Start Point), only one start point per maze<br>
+T : Treasure, must have at least one treasure per maze<br>
+R : Walkable maze path<br>
+X : Maze walls<br>
 
-3. Load configuration file using the `File Explorer` button.
+3. Load configuration file using the `File Explorer` button or by inputting the file path.
 4. Press `Visualize` to view the loaded maze.
-5. Choose a search mode for traversing the maze by pressing `DFS` or `BFS`. Optionally, enable/disable `Enable TSP` and `Disable Branch Pruning` to toggle TSP mode and Branch Pruning respectively.
-6. Press `Search` to search for solution. Next, press `Next` or `Prev` to view search steps or `Autoplay` to animate the search process. 
+5. Choose a search mode for traversing the maze by pressing `DFS` or `BFS`. Optionally, use `TSP Enabled` and `Pruning Enabled` to toggle TSP mode and Branch Pruning on treasureless dead ends respectively.
+6. Press `Search` to search for solution. Next, press `Next` or `Prev` to view the solution in steps, or use `Auto` to animate the search process. 
 
 ## Authors
 

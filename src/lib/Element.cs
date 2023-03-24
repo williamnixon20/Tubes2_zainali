@@ -144,7 +144,6 @@ namespace Tubes2_zainali
         {
             get
             {
-                // TODO URI JD RELATIF
                 switch (_type)
                 {
                     case 'K':

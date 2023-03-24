@@ -57,54 +57,7 @@ namespace Tubes2_zainali
 
                     }
                 }
-                //// Read step history
-                //if (stage == 1)
-                //{
-                //    Console.WriteLine("HI2");
-                //    if (row[0] == 'S')
-                //    {
-                //        stage = 2;
-                //        continue;
-                //    }
-                //    if (row[0] != '$') {
-                //        steps.Add(row);
-                //    } 
-                //}
-                //if (stage == 2)
-                //{
-                //    if (row[0] == 'N')
-                //    {
-                //        stage = 3;
-                //        continue;
-                //    }
-                //    steps.Add(row);
-                //}
-                //if (stage == 3)
-                //{
-                //    if (row == "")
-                //    {
-                //        stage = 4;
-                //        continue;
-                //    }
-                //    history.Add(row);
-                //}
             }
         }
-
-        //static void Main(string[] args)
-        //{
-        //    Console.WriteLine("HI");
-        //    LogReader log = new LogReader("C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\src\\3-23-2023_1-58-32_AM.txt");
-        //    Console.WriteLine(log._logBoard.Count());
-        //    for (int i = 0; i < log._logBoard.Count(); i++)
-        //    {
-        //        Console.WriteLine("New State!");
-        //        log._logBoard[i].ForEach(x => Console.WriteLine(x.ToString()));
-        //        //Console.WriteLine(log.steps[i]);
-        //        //Console.WriteLine(log.history[i]);
-        //        //Console.WriteLine(log.nodes[i]);
-        //    }
-        //}
-
     }
 }

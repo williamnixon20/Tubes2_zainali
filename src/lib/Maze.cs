@@ -80,7 +80,6 @@ namespace Tubes2_zainali
 
                 this._mapMatrix.Add(currentRow);
             }
-
             if (this.TreasureCount == 0)        // no treasure error
             {
                 throw new MapFileException("Map Configuration has no treasure.");
@@ -91,6 +90,36 @@ namespace Tubes2_zainali
             }
             this._nRows = this._mapMatrix.Count;
             this._nCols = colCount;
+
+            // unreachable treasure nodes validation
+            List<Point> visited = new List<Point>();
+            List<Point> reachableTreasure = new List<Point>();
+            this.MazeTraversalCheck(this.StartPoint, visited, reachableTreasure);
+            if (reachableTreasure.Count != this.TreasureCount)
+            {
+                throw new MapFileException("Map Configuration has unreachable treasures.\n(Reachable Treasure)/(Treasure Count) = " + reachableTreasure.Count + "/" + this.TreasureCount);
+            }
+        }
+
+        private void MazeTraversalCheck(Point currentNode, List<Point> visited, List<Point> reachableTreasure)
+        {
+            if (!visited.Contains(currentNode))
+            {
+                visited.Add(currentNode);
+                if (this.GetMazeTile(currentNode) == 'T')
+                {
+                    reachableTreasure.Add(currentNode);
+                }
+            }
+            List<Point> neighbors = this.GetNeighbors(currentNode);
+
+            foreach (Point n in neighbors)
+            {
+                if (this.GetMazeTile(n) != 'X' && !visited.Contains(n))
+                {
+                    MazeTraversalCheck(n, visited, reachableTreasure);
+                }
+            }
         }
 
         public Maze(string directory, string fileName) : this(File.ReadAllText(Path.Combine(directory, fileName)))

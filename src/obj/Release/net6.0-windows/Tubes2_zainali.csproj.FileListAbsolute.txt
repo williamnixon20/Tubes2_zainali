@@ -23,3 +23,30 @@ C:\Users\Eugene\OneDrive - Institut Teknologi Bandung\_Semester 4\Strategi Algor
 C:\Users\Eugene\OneDrive - Institut Teknologi Bandung\_Semester 4\Strategi Algoritma\Tugas\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.pdb
 C:\Users\Eugene\OneDrive - Institut Teknologi Bandung\_Semester 4\Strategi Algoritma\Tugas\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.genruntimeconfig.cache
 C:\Users\Eugene\OneDrive - Institut Teknologi Bandung\_Semester 4\Strategi Algoritma\Tugas\Tubes2_zainali\src\obj\Release\net6.0-windows\ref\Tubes2_zainali.dll
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\bin\Tubes2_zainali.exe
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\bin\Tubes2_zainali.deps.json
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\bin\Tubes2_zainali.runtimeconfig.json
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\bin\Tubes2_zainali.dll
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\bin\Tubes2_zainali.pdb
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\theme\ButtonTheme.baml
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\theme\RadioTheme.baml
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\theme\TextBoxTheme.baml
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\MainWindow.g.cs
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\App.g.cs
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali_MarkupCompile.cache
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali_MarkupCompile.lref
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\App.baml
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\MainWindow.baml
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.g.resources
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.dll
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\refint\Tubes2_zainali.dll
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.pdb
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali.genruntimeconfig.cache
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\ref\Tubes2_zainali.dll
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\bin\assets\zainali.mp3
+C:\Users\ASUS\source\repos\Tubes2_zainali\Tubes2_zainali\src\obj\Release\net6.0-windows\Tubes2_zainali_Content.g.cs

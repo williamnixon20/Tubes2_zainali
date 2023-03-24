@@ -50,6 +50,11 @@ namespace Tubes2_zainali
                 RaisePropertyChanged(nameof(NRows));
             }
         }
+        private void onMediaEnded(object sender, RoutedEventArgs e)
+        {
+            myMediaElement.Position = new TimeSpan(0, 0, 1);
+            myMediaElement.Play();
+        }
         public int NCols
         {
             get { return _nGridCols; }
@@ -64,6 +69,8 @@ namespace Tubes2_zainali
             this.WindowState = WindowState.Maximized;
             InitializeComponent();
             DataContext = this;
+            this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
+
             this._steps = new List<string>();
             this._states = new List<List<Element>>();
             this._numNodes = new List<string>();
@@ -268,6 +275,12 @@ namespace Tubes2_zainali
                 _autoSpeed = 0;
                 btnAuto.Content = "Auto : Off";
             }
+        }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            //myMediaElement.Source = new Uri("zainali.mp3", UriKind.RelativeOrAbsolute);
+            myMediaElement.Play();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

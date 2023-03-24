@@ -9,13 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="assets\spongebob.mp3" />
     <None Remove="assets\start.png" />
     <None Remove="assets\treasure.png" />
+    <None Remove="assets\zainali.mp3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="assets\spongebob.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="assets\start.png" />
     <Resource Include="assets\treasure.png" />
+    <Content Include="assets\zainali.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

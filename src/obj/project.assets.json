@@ -8,19 +8,24 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Eugene\\.nuget\\packages\\": {}
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eugene\\OneDrive - Institut Teknologi Bandung\\_Semester 4\\Strategi Algoritma\\Tugas\\Tubes2_zainali\\src\\Tubes2_zainali.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\src\\Tubes2_zainali.csproj",
       "projectName": "Tubes2_zainali",
-      "projectPath": "C:\\Users\\Eugene\\OneDrive - Institut Teknologi Bandung\\_Semester 4\\Strategi Algoritma\\Tugas\\Tubes2_zainali\\src\\Tubes2_zainali.csproj",
-      "packagesPath": "C:\\Users\\Eugene\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eugene\\OneDrive - Institut Teknologi Bandung\\_Semester 4\\Strategi Algoritma\\Tugas\\Tubes2_zainali\\src\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\src\\Tubes2_zainali.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\source\\repos\\Tubes2_zainali\\Tubes2_zainali\\src\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Eugene\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -64,7 +69,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

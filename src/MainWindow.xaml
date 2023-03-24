@@ -22,6 +22,11 @@
 
 
             <StackPanel>
+                <MediaElement 
+                  Volume="10" x:Name="myMediaElement" IsMuted="False" 
+                  MediaEnded="onMediaEnded"
+                  LoadedBehavior="Manual" UnloadedBehavior="Manual"
+                  Source=".\assets\zainali.mp3"/>
                 <TextBlock Text="在哪里 ~ Zài Nǎ Lǐ"
                    VerticalAlignment="Center" 
                        HorizontalAlignment="Left"

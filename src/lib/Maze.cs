@@ -81,9 +81,13 @@ namespace Tubes2_zainali
                 this._mapMatrix.Add(currentRow);
             }
 
-            if (this.TreasureCount == 0)
+            if (this.TreasureCount == 0)        // no treasure error
             {
                 throw new MapFileException("Map Configuration has no treasure.");
+            }
+            if (this._mazeStart.X == -1 && this._mazeStart.Y == -1)   // uninitialized start error
+            {
+                throw new MapFileException("Map Configuration has no start point.");
             }
             this._nRows = this._mapMatrix.Count;
             this._nCols = colCount;
